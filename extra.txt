@@ -1,0 +1,10 @@
+api toke = 66d26f34485fe71468da40b9e82bc9005d4fc57a
+
+
+*edit settings.py to connect MySQL
+pip install pymysql
+Then, edit the __init__.py file in your project origin dir(the same as settings.py)
+add:
+import pymysql
+pymysql.install_as_MySQLdb()
+
