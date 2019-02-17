@@ -79,7 +79,8 @@ DATABASES = {
         'NAME': 'mysite',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': 'xenon.mysql.pythonanywhere-services.com',
+        'HOST': 'localhost',
+        'PORT': '3306'
     }
 }
 
