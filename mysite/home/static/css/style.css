@@ -140,71 +140,70 @@ a:focus, .btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn:acti
 	outline: none;
 	outline-offset: none;
 }
+
 /* Home Section */
-.intro {
-	display: table;
+#head {
 	width: 100%;
 	height: auto;
 	text-align: center;
-	color: #fff;
 	background: url(../img/elder_care.jpg) no-repeat center center;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
 	background-size: cover;
-	-o-background-size: cover;
+
 }
-.intro .overlay {
-	padding: 100px 0;
+#head .overlay {
+	padding: 50px ;
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#053740+0,053740+100&1+0,0.6+100 */
-	background: -moz-linear-gradient(top, rgba(5,55,64,1) 0%, rgba(5,55,64,0.6) 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, rgba(5,55,64,1) 0%, rgba(5,55,64,0.6) 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, rgba(5,55,64,1) 0%, rgba(5,55,64,0.6) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#053740', endColorstr='#99053740', GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(to bottom, rgba(5,55,64,1) 0%, rgba(5,55,64,0.6) 100%);
 }
-.section-title {
-	padding: 25px 0 60px 0;
-}
-.intro H1 {
-	font-size: 60px;
+#head H1 {
+	font-size: 50px;
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	color: rgba(255,255,255,0.9);
 }
-.intro .brand {
+#head .brand {
 	color: #25BAD0;
-	font-weight: 700;
+	font-weight: 600;
 }
-.intro .intro-text p {
-	font-size: 18px;
-	margin-bottom: 40px;
+#head p {
+	font-size: 16px;
+	margin-bottom: 30px;
 	margin-top: 20px;
 	text-transform: uppercase;
 	color: rgba(255,255,255,0.9);
 }
-header .intro-text {
-	padding-top: 150px;
+#head .intro-text {
+	padding-top: 180px;
 	padding-bottom: 150px;
 }
 /* Services Section */
 #services {
-	padding: 120px 0;
-	background: #053740;
+	padding: 70px 0;
+	background: #e0e1ea;
+}
+#services h2 {
+	color: #0b5c62;
+	text-transform: uppercase;
 }
 #services h4 {
-	color: #25BAD0;
+	color: #175362;
 	text-transform: uppercase;
 }
 #services i.fa {
 	font-size: 32px;
 	margin-bottom: 20px;
-	transition: all 0.5s;
+	margin-top: 70px;
 	color: #053740;
-	width: 100px;
-	height: 100px;
+	width: 90px;
+	height: 90px;
 	padding: 33px 0;
-	border: 1px solid #25BAD0;
-	background: #25BAD0;
+	border: 1px solid #26a1b7;
+	background: #26a0b7;
 	border-radius: 50%;
+}
+#services p {
+	font-size: 15px;
+	color: rgba(0, 0, 0, 0.9);
 }
 /* About Section */
 #about {
@@ -230,133 +229,36 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#20a6bb', end
 	margin-top: 20px;
 	margin-bottom: 30px;
 }
-/* Portfolio Section */
-#portfolio {
-	padding: 100px 0;
-	background: #053740;
+/* Testimonials Section */
+#testimonials {
+	padding: 70px ;
+	background: #e0e1ea;
 }
-.categories {
-	padding-bottom: 30px;
-	text-align: center;
-}
-ul.cat li {
-	display: inline-block;
-}
-ol.type li {
-	display: inline-block;
-	margin-left: 20px;
+#testimonials h2 {
+	color: #0b5c62;
 	text-transform: uppercase;
 }
-ol.type li a {
-	background: transparent;
-	border: 2px solid #25BAD0;
-	color: #25BAD0;
-	padding: 10px 20px;
-}
-ol.type li a.active {
-	background: #25BAD0;
-	color: #053740;
-}
-ol.type li a:hover {
-	background: #25BAD0;
-	color: #053740;
-}
-.isotope-item {
-	z-index: 2
-}
-.isotope-hidden.isotope-item {
-	z-index: 1
-}
-.isotope, .isotope .isotope-item {
-	/* change duration value to whatever you like */
-	-webkit-transition-duration: 0.8s;
-	-moz-transition-duration: 0.8s;
-	transition-duration: 0.8s;
-}
-.isotope-item {
-	margin-right: -1px;
-	-webkit-backface-visibility: hidden;
-	backface-visibility: hidden;
-}
-.isotope {
-	-webkit-backface-visibility: hidden;
-	backface-visibility: hidden;
-	-webkit-transition-property: height, width;
-	-moz-transition-property: height, width;
-	transition-property: height, width;
-}
-.isotope .isotope-item {
-	-webkit-backface-visibility: hidden;
-	backface-visibility: hidden;
-	-webkit-transition-property: -webkit-transform, opacity;
-	-moz-transition-property: -moz-transform, opacity;
-	transition-property: transform, opacity;
-}
-.portfolio-item {
-	margin: 15px 0;
-	-webkit-transition: all 0.5s ease-out;
-	-moz-transition: all 0.5s ease-out;
-	-ms-transition: all 0.5s ease-out;
-	-o-transition: all 0.5s ease-out;
-	transition: all 0.5s ease-out;
-}
-.portfolio-item:hover {
-	-webkit-transform: scale(1.1);
-	-moz-transform: scale(1.1);
-	-ms-transform: scale(1.1);
-	-o-transform: scale(1.1);
-	transform: scale(1.1);
-}
-.portfolio-item .hover-bg {
-	height: 260px;
-	overflow: hidden;
+#testimonials blockquote {
 	position: relative;
-}
-.hover-bg .hover-text {
-	position: absolute;
+	margin-top: 5px;
+	border: 0;
 	text-align: center;
-	margin: 0 auto;
-	color: #ffffff;
-	background: rgba(0, 0, 0, 0.66);
-	padding: 33% 0 0 0;
-	height: 100%;
-	width: 100%;
-	opacity: 0;
-	transition: all 0.5s;
+	background: #e0e1ea;
+	padding: 30px 20px;
 }
-.hover-bg .hover-text>h4 {
-	opacity: 0;
-	color: #fff;
-	font-weight: 400;
-	-webkit-transform: translateY(100%);
-	transform: translateY(100%);
-	transition: all 0.3s;
+#testimonials p{
+	color: #0b0924;
 }
-.hover-bg:hover .hover-text>h4 {
-	opacity: 1;
-	-webkit-backface-visibility: hidden;
-	-webkit-transform: translateY(0);
-	transform: translateY(0);
+#testimonials i {
+	font-size: 24px;
+	color: #0b5c62;
+	margin-bottom: 10px;
 }
-.hover-bg .hover-text>i {
-	opacity: 0;
-	-webkit-transform: translateY(0);
-	transform: translateY(0);
-	transition: all 0.3s;
-}
-.hover-bg:hover .hover-text>i {
-	opacity: 1;
-	-webkit-backface-visibility: hidden;
-	-webkit-transform: translateY(100%);
-	transform: translateY(100%);
-}
-.hover-bg:hover .hover-text {
-	opacity: 1;
-}
-#portfolio i.fa {
-	font-size: 20px;
-	padding: 5px;
-	color: #E87E04;
+#testimonials .clients-name {
+	display: inline-block;
+	border-top: 1px solid #0b5c62;
+	padding-top: 10px;
+	margin-top: 10px;
 }
 /* Team Section */
 #team {
@@ -480,6 +382,40 @@ color: #ccc;
 #contact .social i.fa:hover {
 	color: #25BAD0;
 }
+/*scrol to top*/
+
+.scrollToTop {
+	background: #053740 none repeat scroll 0 0;
+	border-radius: 50%;
+	bottom: 60px;
+	display: none;
+	font-size: 25px;
+	height: 55px;
+	line-height: 50px;
+	position: fixed;
+	right: 50px;
+	text-align: center;
+	text-decoration: none;
+	width: 55px;
+	-webkit-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+	z-index: 999;
+}
+.scrollToTop:hover,
+.scrollToTop:focus{
+  color: #25BAD0;
+  text-decoration: underline;
+  background-color: transparent;
+}
+.scrollToTop[disabled]:hover,
+fieldset[disabled] .scrollToTop:hover,
+.scrollToTop[disabled]:focus,
+fieldset[disabled] .scrollToTop:focus {
+  color: #777;
+  text-decoration: none;
+}
+
 /* Footer Section*/
 #footer {
 	background: #03252b;
