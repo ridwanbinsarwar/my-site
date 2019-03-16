@@ -1,0 +1,17 @@
+
+<div>
+<form method="POST" action="/check_email_password">
+    {% csrf_token %}
+    <input type="text" name="user_email">
+    <input type="text" name="user_password">
+    <button type="submit">Login</button>
+    {% if valid %}
+    <p>VALID</p>
+    {%endif%}
+    {% if not valid%}
+    <P>email or password does not match</P>
+    {%endif%}
+</form>
+</div>
+
+

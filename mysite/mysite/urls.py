@@ -18,5 +18,7 @@ from django.urls import path
 from home import views as home_views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home_views.index),
+    path('', home_views.home),
+    path('login/', home_views.user_login),
+    path('check_email_password', home_views.check_email_password)
 ]
