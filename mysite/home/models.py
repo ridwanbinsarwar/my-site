@@ -11,3 +11,42 @@ class Users(models.Model):
         managed = False
         db_table = 'users'
 
+
+class Admin(models.Model):
+    id = models.CharField(db_column='ID', max_length=30, blank=True, null=False, primary_key=True)  # Field name made lowercase.
+    password = models.CharField(max_length=30, blank=True, null=True)
+    role = models.CharField(max_length=10, blank=True, null=True)
+    email = models.CharField(max_length=50, blank=True, null=True)
+    contact_no = models.CharField(max_length=10, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'admin'
+
+
+class Customer(models.Model):
+    id = models.CharField(db_column='ID', primary_key=True, max_length=30)  # Field name made lowercase.
+    name = models.CharField(max_length=50, blank=True, null=True)
+    email = models.CharField(max_length=50, blank=True, null=True)
+    nid = models.IntegerField(db_column='NID', blank=True, null=True)  # Field name made lowercase.
+    rating = models.IntegerField(blank=True, null=True)
+    password = models.CharField(max_length=30, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'customer'
+
+
+class ServiceProvider(models.Model):
+    id = models.CharField(db_column='ID', max_length=30, blank=False, null=False, primary_key=True)  # Field name made lowercase.
+    name = models.CharField(max_length=50, blank=True, null=True)
+    contact_no = models.CharField(max_length=11, blank=True, null=True)
+    nid = models.IntegerField(db_column='NID', blank=True, null=True)  # Field name made lowercase.
+    service_type = models.CharField(max_length=1, blank=True, null=True)
+    rating = models.IntegerField(blank=True, null=True)
+    verified = models.IntegerField(blank=True, null=True)
+    password = models.CharField(max_length=30, blank=False, null=False)
+
+    class Meta:
+        managed = False
+        db_table = 'service_provider'

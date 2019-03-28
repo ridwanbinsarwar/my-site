@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
-from .forms import UserLogin
+from .forms import UserLogin, NewServiceProvider
 
 
 def home(request):
@@ -11,7 +11,23 @@ def home(request):
 
 
 def user_login(request):
+
     return render(request, 'sheba/login.html', {})
+
+
+def user_signup(request):
+    if request.method == "POST":
+        form = NewServiceProvider(request.POST)
+        if form.is_valid():
+            print("valid")
+            post = form.save(commit=False)
+            post.save()
+        else:
+            print("not valid")
+    else:
+        form = NewServiceProvider()
+
+    return render(request, 'sheba/signup.html', {'form': form})
 
 
 def check_email_password(request):
