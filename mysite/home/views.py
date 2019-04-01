@@ -1,48 +1,109 @@
+from django import forms
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-
+from django.contrib import messages
 # Create your views here.
-from .forms import UserLogin, NewServiceProvider
+from .forms import UserLogin, NewServiceProvider, NewUser, ServiceProviderProfile, CustomerProfile
+from .models import Users, ServiceProvider, Customer
+
+LOGGED_IN = "-1"
+USER = True
 
 
 def home(request):
     return render(request, 'sheba/home.html', {})
 
 
+def logout(request):
+    global LOGGED_IN,USER
+    LOGGED_IN = "-1"
+    USER = True
+    return redirect('/')
+
+
+def profile(request):
+    global LOGGED_IN,USER
+
+    if LOGGED_IN == "-1":
+        return redirect('/login/')
+
+    if not USER:
+        obj = ServiceProvider.objects.get(pk=LOGGED_IN)
+        form = ServiceProviderProfile()
+    else:
+        obj = Customer.objects.get(pk=LOGGED_IN)
+        form = CustomerProfile()
+
+    if request.method == 'POST':
+        if not USER:
+            form = ServiceProviderProfile(request.POST, instance=obj)
+        else:
+            form = CustomerProfile(request.POST, instance=obj)
+
+        if form.is_valid():
+            form.save()
+        print(form)
+    return render(request, 'sheba/profile.html', {'form': form, 'user': obj})
+
+
 def user_login(request):
 
-    return render(request, 'sheba/login.html', {})
+    if request.method =='POST':
+        pk = request.POST["id"]
+        password = request.POST["password"]
+        found = False
+        user_check = User.objects.raw(
+            'SELECT id , password FROM Customer WHERE id=%s AND password=%s',
+            [pk, password])
+        sp_check = User.objects.raw(
+            'SELECT id , password FROM service_provider WHERE id=%s AND password=%s',
+            [pk, password])
+        for i in user_check:
+            found = True
+        for i in sp_check:
+            global USER
+            USER = False
+            found = True
+        if found:
+            global LOGGED_IN
+            LOGGED_IN = pk
+            return redirect('/profile/')  # since name="website"
+
+        else:
+            print("FAILED")
+            return render(request, 'sheba/user_login.html', {'valid': found})
+
+    return render(request, 'sheba/user_login.html', {'valid': True})
 
 
-def user_signup(request):
+def sp_signup(request):
     if request.method == "POST":
         form = NewServiceProvider(request.POST)
         if form.is_valid():
             print("valid")
-            post = form.save(commit=False)
-            post.save()
-        else:
-            print("not valid")
+            form.save()
+            return redirect('/')
+
     else:
         form = NewServiceProvider()
+    return render(request, 'sheba/sp_signup.html', {'form': form})
 
-    return render(request, 'sheba/signup.html', {'form': form})
 
+def user_signup(request):
+    if request.method == "POST":
+        form = NewUser(request.POST)
+        if form.is_valid():
+            print("valid")
+            form.save()
+            return redirect('/')
 
-def check_email_password(request):
-    pk = request.POST["user_email"]
-    password = request.POST["user_password"]
-    found = False
-    user_check = User.objects.raw(
-        'SELECT user_email AS id, user_password, user_type FROM users WHERE user_email=%s AND user_password=%s',
-        [pk, password])
-    for i in user_check:
-        found = True
-    if found:
-        print("SUCCESSFUL")
+        else:
+            print("not valid")
+            messages.error(request, 'User already exist')
     else:
-        print("FAILED")
-    return render(request, 'sheba/login.html', {"valid": found})
+        form = NewUser()
+
+    return render(request, 'sheba/user_signup.html', {'form': form})
 
 

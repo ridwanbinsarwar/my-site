@@ -20,6 +20,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_views.home),
     path('login/', home_views.user_login),
-    path('check_email_password', home_views.check_email_password),
-    path('signup/', home_views.user_signup),
+    path('sp_signup/', home_views.sp_signup),
+    path('user_signup/',home_views.user_signup),
+    path('user_login/',home_views.user_login),
+    path('profile/', home_views.profile),
+    path('logout/', home_views.logout),
+
 ]

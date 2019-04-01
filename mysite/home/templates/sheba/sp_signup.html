@@ -1,0 +1,66 @@
+{% load static %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <title>signup</title>
+
+</head>
+<body>
+
+
+  <form class="modal-content" method="post" action="">
+          {% csrf_token %}
+    <div class="container">
+      <h1>Sign Up as service provider</h1>
+      <p>Please fill in this form to create an account.</p>
+      <hr>
+      <label ><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" name="id" id ="id" required>
+
+      <label ><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" id="password" name="password" required>
+
+      <label ><b>Repeat Password</b></label>
+      <input type="password" placeholder="Repeat Password" name="re_password" id="re_password" required>
+
+                    <!--{% if messages %}-->
+<!--<ul class="messages">-->
+    <!--{% for message in messages %}-->
+    <!--<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>-->
+        <!--{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}-->
+        <!--{{ message }}-->
+    <!--</li>-->
+    <!--{% endfor %}-->
+<!--</ul>-->
+<!--{% endif %}-->
+
+
+
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                 </div>
+            {% endfor %}
+        {% endif %}
+
+      <div class="clearfix">
+        <button type="button" onclick="window.location.href='/'" class="cancelbtn">Cancel</button>
+        <button type="submit" class="signupbtn">Sign Up</button>
+      </div>
+    </div>
+  </form>
+
+
+<script>
+</script>
+
+</body>
+</html>
