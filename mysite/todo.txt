@@ -1,0 +1,8 @@
+1.clone
+2.create venv
+3.activate venv
+4.pip install -r requirements.txt
+5.copy mysql client to main directory
+6.pip install mysqlclient-1.4.2-cp37-cp37m-win32.whl
+7.cd **
+8.python manage.py runserver
