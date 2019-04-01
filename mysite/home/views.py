@@ -12,7 +12,7 @@ USER = True
 
 
 def home(request):
-    #checking commit
+    #checking commit1
     return render(request, 'sheba/home.html', {})
 
 
