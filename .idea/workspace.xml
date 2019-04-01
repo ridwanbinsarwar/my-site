@@ -4,7 +4,10 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="677d7dea-61ba-49b5-8a95-fee28fbc6d2a" name="Default Changelist" comment="" />
+    <list default="true" id="677d7dea-61ba-49b5-8a95-fee28fbc6d2a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/home/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/home/views.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,11 +28,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mysite/home/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="32" selection-start-line="32" selection-end-line="32" />
+            <state relative-caret-position="191">
+              <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -106,11 +109,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/mysite/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="33" selection-start-line="33" selection-end-line="33" />
+            <state relative-caret-position="180">
+              <caret line="35" column="26" lean-forward="true" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -171,9 +174,9 @@
         <option value="$PROJECT_DIR$/mysite/home/templates/sheba/user_signup.html" />
         <option value="$PROJECT_DIR$/mysite/home/models.py" />
         <option value="$PROJECT_DIR$/mysite/home/templates/sheba/profile.html" />
-        <option value="$PROJECT_DIR$/mysite/home/views.py" />
         <option value="$PROJECT_DIR$/mysite/home/forms.py" />
         <option value="$PROJECT_DIR$/mysite/mysite/settings.py" />
+        <option value="$PROJECT_DIR$/mysite/home/views.py" />
       </list>
     </option>
   </component>
@@ -335,7 +338,28 @@
       <option name="project" value="LOCAL" />
       <updated>1554141650534</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="&quot;- tahiyat">
+      <created>1554142060018</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1554142060019</updated>
+    </task>
+    <task id="LOCAL-00007" summary="&quot;- tahiyat">
+      <created>1554142203994</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1554142203994</updated>
+    </task>
+    <task id="LOCAL-00008" summary="&quot;- tahiyat">
+      <created>1554142229293</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1554142229293</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -343,6 +367,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21130952" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -453,7 +478,8 @@
     <MESSAGE value="&quot;v.02&quot;" />
     <MESSAGE value="&quot;v.02.1&quot;" />
     <MESSAGE value="temporay&quot;- tahiyat" />
-    <option name="LAST_COMMIT_MESSAGE" value="temporay&quot;- tahiyat" />
+    <MESSAGE value="&quot;- tahiyat" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;- tahiyat" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/.gitignore">
@@ -588,16 +614,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/home/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="32" selection-start-line="32" selection-end-line="32" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/home/templates/sheba/user_signup.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -655,8 +671,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/mysite/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        <state relative-caret-position="180">
+          <caret line="35" column="26" lean-forward="true" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/home/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
