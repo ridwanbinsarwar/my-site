@@ -1,7 +1,7 @@
 from django import forms
 
 
-from .models import Users, ServiceProvider, Customer
+from .models import Users, ServiceProvider, Customer, Request
 
 
 class UserLogin(forms.ModelForm):
@@ -54,3 +54,9 @@ class CustomerProfile(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ['first_name', 'last_name', 'contact_no', 'city', 'email']
+
+class Request(forms.ModelForm):
+
+    class Meta:
+        model = Request
+        fields = ['customer' , 'location', 'service_type', 'date_field']

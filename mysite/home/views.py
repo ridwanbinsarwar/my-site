@@ -70,7 +70,7 @@ def user_login(request):
         if found:
             global LOGGED_IN
             LOGGED_IN = pk
-            return redirect('/profile/')  # since name="website"
+            return redirect('/user_homepage/')  # since name="website"
 
         else:
             print("FAILED")
@@ -109,3 +109,10 @@ def user_signup(request):
     return render(request, 'sheba/user_signup.html', {'form': form})
 
 
+def homepage(request):
+    #checking commit
+    #commit check1234
+    return render(request, 'sheba/user_homepage.html', {})
+
+def request(request):
+    return render(request, 'sheba/request.html',{})

@@ -25,5 +25,6 @@ urlpatterns = [
     path('user_login/',home_views.user_login),
     path('profile/', home_views.profile),
     path('logout/', home_views.logout),
-
+    path('user_homepage/', home_views.homepage),
+    path('request/',home_views.request),
 ]

@@ -65,3 +65,31 @@ class ServiceProvider(models.Model):
 
     def __str__(self):
         return self.id
+
+
+class Location(models.Model):
+    location = models.CharField(primary_key=True, max_length=25)
+    street = models.CharField(max_length=30, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'location'
+
+
+
+class Request(models.Model):
+    customer = models.ForeignKey(Customer, models.DO_NOTHING, primary_key=True)
+    service_provider = models.ForeignKey('ServiceProvider', models.DO_NOTHING)
+    location = models.ForeignKey(Location, models.DO_NOTHING, db_column='location')
+    service_type = models.CharField(max_length=10)
+    date_field = models.DateTimeField(db_column='date_', blank=True, null=True)  # Field renamed because it ended with '_'.
+    rating = models.IntegerField(blank=True, null=True)
+    review = models.TextField(blank=True, null=True)
+    status_field = models.CharField(db_column='status_', max_length=20, blank=True, null=True)  # Field renamed because it ended with '_'.
+
+    class Meta:
+        managed = False
+        db_table = 'request'
+        unique_together = (('customer', 'service_provider'),)
+
+
