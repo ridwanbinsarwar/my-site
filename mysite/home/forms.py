@@ -1,13 +1,7 @@
 from django import forms
 
 
-from .models import Users, ServiceProvider, Customer
-
-
-class UserLogin(forms.ModelForm):
-    class Meta:
-        model = Users
-        fields = ('user_email', 'user_password')
+from .models import ServiceProvider, Customer
 
 
 class NewServiceProvider(forms.ModelForm):
