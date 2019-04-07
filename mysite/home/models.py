@@ -1,6 +1,8 @@
 from django.db import models
 
 
+
+
 # Create your models here.
 class Users(models.Model):
     user_email = models.CharField(primary_key=True, max_length=255)
@@ -66,7 +68,6 @@ class ServiceProvider(models.Model):
     def __str__(self):
         return self.id
 
-
 class Location(models.Model):
     location = models.CharField(primary_key=True, max_length=25)
     street = models.CharField(max_length=30, blank=True, null=True)
@@ -93,3 +94,17 @@ class Request(models.Model):
         unique_together = (('customer', 'service_provider'),)
 
 
+class Req(models.Model):
+    location = models.CharField(max_length=50, blank=True, null=True)
+    service_type = models.IntegerField(blank=True, null=True)
+    customer = models.CharField(max_length=30, blank=True, null=True)
+    status = models.CharField(max_length=30, blank=True, null=False)
+    start_time = models.CharField(max_length=20)
+    end_time = models.CharField(max_length=20)
+
+    class Meta:
+        managed = False
+        db_table = 'req'
+
+    def __str__(self):
+        return self.id

@@ -1,44 +1,45 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 # Create your views here.
-from .forms import UserLogin, NewServiceProvider, NewUser, ServiceProviderProfile, CustomerProfile
-from .models import Users, ServiceProvider, Customer
-
-LOGGED_IN = "-1"
-USER = True
-
+from .forms import NewServiceProvider, NewUser, ServiceProviderProfile, CustomerProfile, requestForm
+from .models import ServiceProvider, Customer
+import datetime
 
 def home(request):
-    #checking commit
-    #commit check1234
     return render(request, 'sheba/home.html', {})
+def available_request(request):
+    all_req =  User.objects.raw(
+            'SELECT * FROM req WHERE status LIKE ("pending")'
+            )
 
+    return render(request, 'sheba/available_request.html', {'all_req' : all_req})
 
 def logout(request):
-    global LOGGED_IN,USER
-    LOGGED_IN = "-1"
-    USER = True
+    del request.session['user']
     return redirect('/')
 
 
 def profile(request):
-    global LOGGED_IN,USER
-
-    if LOGGED_IN == "-1":
+    user = True
+    try:
+       pk = request.session['user']
+    except KeyError:
         return redirect('/login/')
 
-    if not USER:
-        obj = ServiceProvider.objects.get(pk=LOGGED_IN)
+    try:
+        obj = ServiceProvider.objects.get(pk=request.session['user'])
         form = ServiceProviderProfile()
-    else:
-        obj = Customer.objects.get(pk=LOGGED_IN)
+    except ObjectDoesNotExist:
+        obj = Customer.objects.get(pk=request.session['user'])
         form = CustomerProfile()
+        user = False
 
     if request.method == 'POST':
-        if not USER:
+        if user:
             form = ServiceProviderProfile(request.POST, instance=obj)
         else:
             form = CustomerProfile(request.POST, instance=obj)
@@ -50,10 +51,10 @@ def profile(request):
 
 
 def user_login(request):
-
-    if request.method =='POST':
+    if request.method == 'POST':
         pk = request.POST["id"]
         password = request.POST["password"]
+
         found = False
         user_check = User.objects.raw(
             'SELECT id , password FROM Customer WHERE id=%s AND password=%s',
@@ -61,16 +62,18 @@ def user_login(request):
         sp_check = User.objects.raw(
             'SELECT id , password FROM service_provider WHERE id=%s AND password=%s',
             [pk, password])
+
         for i in user_check:
             found = True
         for i in sp_check:
-            global USER
-            USER = False
             found = True
         if found:
             global LOGGED_IN
             LOGGED_IN = pk
+
+            request.session['user'] = pk
             return redirect('/user_homepage/')  # since name="website"
+            #return redirect('/profile/')  # since name="website"
 
         else:
             print("FAILED")
@@ -115,4 +118,27 @@ def homepage(request):
     return render(request, 'sheba/user_homepage.html', {})
 
 def request(request):
-    return render(request, 'sheba/request.html',{})
+    if request.method == 'GET':
+        form = requestForm()
+    else:
+        mutable = request.POST._mutable
+        request.POST._mutable = True
+        request.POST['customer'] = request.session['user']
+        request.POST['status'] = "pending"
+        print(datetime.datetime.now().time())
+        request.POST._mutable = mutable
+
+        form = requestForm(request.POST)
+        if form.is_valid():
+
+            print("valid")
+            #form.data['customer'] = "123"
+            print(form)
+            form.save()
+            return redirect('/user_homepage/')
+
+        else:
+            print("not valid")
+            messages.error(request, 'something went wrong')
+    return render(request, 'sheba/request.html',{'form':form})
+

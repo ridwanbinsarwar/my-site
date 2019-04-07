@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from home import views as home_views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_views.home),
@@ -27,4 +28,7 @@ urlpatterns = [
     path('logout/', home_views.logout),
     path('user_homepage/', home_views.homepage),
     path('request/',home_views.request),
+    path('available_request/', home_views.available_request),
+
 ]
+
