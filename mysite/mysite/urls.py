@@ -29,6 +29,7 @@ urlpatterns = [
     path('user_homepage/', home_views.homepage),
     path('request/',home_views.request),
     path('available_request/', home_views.available_request),
-
+    path('history/', home_views.history),
+    path('sp_homepage/', home_views.sp_homepage),
 ]
 

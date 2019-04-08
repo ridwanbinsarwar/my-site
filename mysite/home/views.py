@@ -11,12 +11,22 @@ import datetime
 
 def home(request):
     return render(request, 'sheba/home.html', {})
+
+
 def available_request(request):
+    if request.method == 'POST':
+        p = request.POST
+
+        print(p.get('service_type', False))
+    obj = ServiceProvider.objects.get(pk=request.session['user'])
+    form = ServiceProviderProfile()
+    type = obj.service_type
     all_req =  User.objects.raw(
-            'SELECT * FROM req WHERE status LIKE ("pending")'
+            'SELECT * FROM req WHERE status LIKE ("pending") AND service_type = %s',[type]
             )
 
     return render(request, 'sheba/available_request.html', {'all_req' : all_req})
+
 
 def logout(request):
     del request.session['user']
@@ -63,7 +73,9 @@ def user_login(request):
             'SELECT id , password FROM service_provider WHERE id=%s AND password=%s',
             [pk, password])
 
+        cus_id = False
         for i in user_check:
+            cus_id = True
             found = True
         for i in sp_check:
             found = True
@@ -72,14 +84,22 @@ def user_login(request):
             LOGGED_IN = pk
 
             request.session['user'] = pk
-            return redirect('/user_homepage/')  # since name="website"
-            #return redirect('/profile/')  # since name="website"
+            request.session['type'] = cus_id
+
+            print(cus_id)
+            return render(request,'sheba/user_homepage.html', {'cus_id':request.session['type']})
 
         else:
             print("FAILED")
             return render(request, 'sheba/user_login.html', {'valid': found})
+    else:
 
-    return render(request, 'sheba/user_login.html', {'valid': True})
+        try:
+            pk = request.session['user']
+            return render(request, 'sheba/user_homepage.html', {'cus_id': request.session['type']})
+        except KeyError:
+            return render(request, 'sheba/user_login.html', {'valid': True})
+
 
 
 def sp_signup(request):
@@ -116,6 +136,10 @@ def homepage(request):
     #checking commit
     #commit check1234
     return render(request, 'sheba/user_homepage.html', {})
+def sp_homepage(request):
+    #checking commit
+    #commit check1234
+    return render(request, 'sheba/sp_homepage.html', {})
 
 def request(request):
     if request.method == 'GET':
@@ -135,10 +159,27 @@ def request(request):
             #form.data['customer'] = "123"
             print(form)
             form.save()
-            return redirect('/user_homepage/')
+            #return render(request, 'sheba/user_homepage.html', {'cus_id': request.session['type']})
+
 
         else:
             print("not valid")
             messages.error(request, 'something went wrong')
     return render(request, 'sheba/request.html',{'form':form})
 
+def history(request):
+    cus_id_his = '\0'
+    sp_id_his = '\0'
+    try:
+        obj = ServiceProvider.objects.get(pk=request.session['user'])
+        form = ServiceProviderProfile()
+        sp_id_his = obj.id
+    except ObjectDoesNotExist:
+        obj = Customer.objects.get(pk=request.session['user'])
+        form = CustomerProfile()
+        cus_id_his = obj.id
+    all_his = User.objects.raw(
+        'SELECT * FROM req WHERE status LIKE ("complete") AND (customer=%s OR sp_id=%s)',[cus_id_his,sp_id_his]
+    )
+
+    return render(request, 'sheba/history.html', {'all_his':all_his})

@@ -43,7 +43,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="/profile"><font size="3">Profile</font></a></li>
                 <li><a href="/logout"><font size="3">Logout</font></font></a></li>
-                  <li><a href="/request"><font size="3">History</font></a> </li>
+                  <li><a href="/history"><font size="3">History</font></a> </li>
               </ul>
             </div>
         </div>
@@ -57,12 +57,25 @@
             <div class="overlay"> <!-- css -->
                 <div class="container">
                     <div class="row">
-                      <div class="intro-text"> <!-- css -->
-                        <h1><span class="brand">Request</span></h1>
+                      <div class="intro-text"><!-- css -->
+                          <form method="post">
+
+
+                          {% csrf_token %}
+                          {% if cus_id %}
+                            <h1><span class="brand">Request</span></h1>
 
                           <!-- header button -->
-                        <a href="/request" class="btn btn-default">Request Service</a>
+                            <a href="/request" class="btn btn-default">Request Service</a>
 
+                          {% endif %}
+                          {%if not cus_id%}
+                           <h1><span class="brand">Available Services</span></h1>
+
+                          <!-- header button -->
+                            <a href="/available_request" class="btn btn-default">Services</a>
+                          {% endif %}
+                          </form>
                       </div>
                     </div>
                 </div>

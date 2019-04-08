@@ -101,6 +101,9 @@ class Req(models.Model):
     status = models.CharField(max_length=30, blank=True, null=False)
     start_time = models.CharField(max_length=20)
     end_time = models.CharField(max_length=20)
+    sp = models.ForeignKey('ServiceProvider', models.DO_NOTHING, blank=True, null=True)
+
+
 
     class Meta:
         managed = False

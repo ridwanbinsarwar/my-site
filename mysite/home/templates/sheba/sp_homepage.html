@@ -1,9 +1,9 @@
-{% load static %}
+{%load static%}
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Child & Elder Care Service</title>
+<title>Homepage</title>
 <meta name="description" content="">
 <meta name="author" content="Ridwan & Tahiyat">
 
@@ -18,10 +18,7 @@
     ================================================== -->
 
 <!-- for collapse navbar -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-</head>
 
 <body id = "home-top" data-spy = "scroll" data-target=".navbar-fixed-top">
 
@@ -44,28 +41,35 @@
             <!-- /.navbar-collapse -->
             <div class="collapse navbar-collapse" id="navbar-top">
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="#home-top"><font size="3">Home</font></a></li>
-                <li><a href="user_login/"><font size="3">Login</font></a></li>
-                <li>
-                    <div class="dropdown">
-                        <button id="drp" class="dropbtn"><a class="navbar-brand  "><font size="3">SIGNUP</font></a></button>
-                        <div class="dropdown-content">
-                            <a href="user_signup/">User</a>
-                            <a href="sp_signup/">Service Provider</a>
-                        </div>
-                    </div>
-                </li>
+                <li><a href="/profile"><font size="3">Profile</font></a></li>
+                <li><a href="/logout"><font size="3">Logout</font></font></a></li>
+                  <li><a href="/history"><font size="3">History</font></a> </li>
               </ul>
             </div>
         </div>
     </nav>
 
-    <div>
-         {% block content %}
-         {% endblock %}
-    </div>
 
 
+<div id="head" class="text-center">
+    <header id ="header">
+        <div class="intro"> <!-- css -->
+            <div class="overlay"> <!-- css -->
+                <div class="container">
+                    <div class="row">
+                      <div class="intro-text"> <!-- css -->
+                        <h1><span class="brand">Available Services</span></h1>
+
+                          <!-- header button -->
+                        <a href="/available_request" class="btn btn-default">Services</a>
+
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+ </div>
 <div id="footer">
   <div class="container text-center">
     <div class="fnav">
@@ -86,7 +90,15 @@
   <!-- Wow animation -->
 
  <!-- Custom js -->
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../static/js/main.js"></script>
 </body>
+    <!--header-->
+
+
+<!-- Services Section -->
 </html>
+
+
+
