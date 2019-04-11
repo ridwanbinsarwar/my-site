@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-import pymysql
+import connection
 # Create your views here.
 from .forms import NewServiceProvider, NewUser, ServiceProviderProfile, CustomerProfile, requestForm,Req
 from .models import ServiceProvider, Customer

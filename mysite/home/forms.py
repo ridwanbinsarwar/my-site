@@ -49,6 +49,7 @@ class CustomerProfile(forms.ModelForm):
         model = Customer
         fields = ['first_name', 'last_name', 'contact_no', 'city', 'email']
 
+
 class requestForm(forms.ModelForm):
     class Meta:
         model = Req
