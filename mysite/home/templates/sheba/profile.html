@@ -23,6 +23,8 @@
 </nav>
 
 <hr>
+ <form class="form" action="" method="post" id="" enctype="multipart/form-data">
+     {% csrf_token %}
 <div class="container bootstrap snippet">
     <div class="row">
   		<div class="col-sm-10"><h1>{{user.first_name}}</h1></div>
@@ -33,9 +35,12 @@
 
 
       <div class="text-center">
-        <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+
+        <img src="{{user.image.url}}" class="avatar img-circle img-thumbnail" alt="avatar">
+
         <h6>Upload a different photo...</h6>
-        <input type="file" class="text-center center-block file-upload">
+          {{ form.image }}
+
       </div></hr><br>
 
 
@@ -61,8 +66,6 @@
           <div class="tab-content">
             <div class="tab-pane active" id="home">
                 <hr>
-                  <form class="form" action="" method="post" id="registrationForm2">
-                                {% csrf_token %}
 
                       <div class="form-group">
 
@@ -131,7 +134,6 @@
                                	<button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
                             </div>
                       </div>
-              	</form>
 
               <hr>
 
@@ -142,7 +144,7 @@
 
         </div><!--/col-9-->
     </div><!--/row-->
-
+ </form>
 <div id="footer">
   <div class="container text-center">
     <div class="fnav">

@@ -60,6 +60,7 @@ class ServiceProvider(models.Model):
     rating = models.IntegerField(blank=True, null=True)
     verified = models.IntegerField(blank=True, null=True)
     password = models.CharField(max_length=30, blank=False, null=False)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     class Meta:
         managed = False
@@ -111,3 +112,6 @@ class Req(models.Model):
 
     def __str__(self):
         return self.id
+
+class check_field(models.Model):
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')

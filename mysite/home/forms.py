@@ -40,7 +40,7 @@ class ServiceProviderProfile(forms.ModelForm):
 
     class Meta:
         model = ServiceProvider
-        fields = ['first_name', 'last_name', 'contact_no', 'city', 'email']
+        fields = ['first_name', 'last_name', 'contact_no', 'city', 'email', 'image']
 
 
 class CustomerProfile(forms.ModelForm):

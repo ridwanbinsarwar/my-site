@@ -58,22 +58,30 @@ def profile(request):
 
     try:
         obj = ServiceProvider.objects.get(pk=request.session['user'])
-        form = ServiceProviderProfile()
+        # form = ServiceProviderProfile()
     except ObjectDoesNotExist:
         obj = Customer.objects.get(pk=request.session['user'])
-        form = CustomerProfile()
+        # form = CustomerProfile()
         user = False
 
     if request.method == 'POST':
         if user:
-            form = ServiceProviderProfile(request.POST, instance=obj)
+            form = ServiceProviderProfile(request.POST, request.FILES, instance=obj)
         else:
             form = CustomerProfile(request.POST, instance=obj)
 
         if form.is_valid():
             form.save()
-        print(form)
-    return render(request, 'sheba/profile.html', {'form': form, 'user': obj})
+            print(form)
+        return render(request, 'sheba/profile.html', {'form': form, 'user': obj})
+    else:
+        if user:
+            form = ServiceProviderProfile()
+        else:
+            form = CustomerProfile()
+            user = False
+
+        return render(request, 'sheba/profile.html', {'form': form, 'user': obj})
 
 
 def user_login(request):
