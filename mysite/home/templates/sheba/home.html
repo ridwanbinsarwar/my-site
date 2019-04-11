@@ -1,5 +1,86 @@
-{% extends 'sheba/base.html' %}
-{% block content %}
+{% load static %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Child & Elder Care Service</title>
+<meta name="description" content="">
+<meta name="author" content="Ridwan & Tahiyat">
+
+
+
+<!-- Bootstrap -->
+<link rel="stylesheet" type="text/css"  href="../static/css/bootstrap.css">
+<link rel="stylesheet" href="{% static 'css/sheba.css' %}">
+<link rel="stylesheet" type="text/css" href="../static/fonts/font-awesome/css/font-awesome.css">
+
+<!-- Stylesheet
+    ================================================== -->
+
+<!-- for collapse navbar -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body id = "home-top" data-spy = "scroll" data-target=".navbar-fixed-top">
+
+    <!-- top nav bar -->
+    <nav id = "menu" class="navbar navbar-default navbar-fixed-top">
+        <div class = "container">
+        <form method="post">
+                          {% csrf_token %}
+            <div class="navbar-header">
+                <!-- collapse when size of screen is small -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-top">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                 </button>
+                <!-- logo -->
+                <a class="navbar-brand page-scroll" href="#home-top"><i class="fa fa-moon-o fa-rotate-90"></i> Sheba</a>
+            </div>
+
+            <!-- /.navbar-collapse -->
+
+            <div class="collapse navbar-collapse" id="navbar-top">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#home-top"><font size="3">Home</font></a></li>
+
+                   {% if user_type == "not_logged" %}
+                        <li><a href="user_login/"><font size="3">Login</font></a></li>
+                   {% endif %}
+
+                   {% if user_type == "user" or user_type == "service_provider" %}
+                        <li><a href="/profile"><font size="3">Profile</font></a></li>
+                   {% endif %}
+
+                   {% if user_type == "user" or user_type == "service_provider" %}
+                        <li><a href="/history"><font size="3">History</font></a> </li>
+                   {% endif %}
+
+                   {% if user_type == "user" or user_type == "service_provider" %}
+                        <li><a href="/logout"><font size="3">Logout</font></a></li>
+                   {% endif %}
+
+                   {% if user_type == "not_logged" %}
+                    <li>
+                        <div class="dropdown">
+                            <button id="drp" class="dropbtn"><a class="navbar-brand  "><font size="3">SIGNUP</font></a></button>
+                            <div class="dropdown-content">
+                                <a href="user_signup/">User</a>
+                                <a href="sp_signup/">Service Provider</a>
+                            </div>
+                        </div>
+                    </li>
+                   {% endif %}
+              </ul>
+            </div>
+        </form>
+        </div>
+    </nav>
+
     <!--header-->
  <div id="head" class="text-center">
     <header id ="header">
@@ -8,10 +89,24 @@
                 <div class="container">
                     <div class="row">
                       <div class="intro-text"> <!-- css -->
-                        <h1>Welcome to <span class="brand">SHEBA</span></h1>
-                        <p>We Provide Child & Elder Care Service At Your Home</p>
-                          <!-- header button -->
-                        <a href="#services" class="btn btn-default">Learn More</a>
+                           <form method="post">
+                          {% csrf_token %}
+                          {% if user_type == "user" %}
+                                <h1><span class="brand">Request</span></h1>
+                                <a href="/request" class="btn btn-default">Request Service</a>
+                          {% endif %}
+
+                          {%if user_type == "service_provider" %}
+                                <h1><span class="brand">Available Services</span></h1>
+                                <a href="/available_request" class="btn btn-default">Services</a>
+                          {% endif %}
+
+                          {% if user_type == "not_logged" %}
+                                <h1>Welcome to <span class="brand">SHEBA</span></h1>
+                                <p>We Provide Child & Elder Care Service At Your Home</p>
+                                <a href="#services" class="btn btn-default">Learn More</a>
+                          {% endif %}
+                            </form>
                       </div>
                     </div>
                 </div>
@@ -55,4 +150,17 @@
 
 
 
-{%endblock%}
+<div id="footer">
+  <div class="container text-center">
+    <div class="fnav">
+      <p>Copyright &copy; 2019 CycloCoder. Designed by Sheba</p>
+    </div>
+  </div>
+</div>
+
+
+  <script src="../static/js/bootstrap.js"></script>
+
+<script type="text/javascript" src="../static/js/main.js"></script>
+</body>
+</html>

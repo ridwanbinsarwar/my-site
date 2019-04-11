@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
-<html5>
 <head>
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
@@ -18,14 +17,13 @@
 <form method="post" action="">
     {%csrf_token%}
     {%for req in all_req%}
-   <ul>
+
       <p>{{req.service_type}}</p>
 
       <input type="text" placeholder="Enter Email" name="serivce_type" value="{{req.service_type}}" id ="service_type" required>
-        <button type="submit" class="signupbtn">Log In</button>
+        <a type="button" href="{% url 'sp_request' pk=req.pk %}" class="signupbtn">Log In</a>
 
 
-   </ul>
     {%endfor%}</form>
 </body>
 </html>

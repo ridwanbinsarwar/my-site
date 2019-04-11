@@ -16,20 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from home import views as home_views
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_views.home),
     path('login/', home_views.user_login),
     path('sp_signup/', home_views.sp_signup),
-    path('user_signup/',home_views.user_signup),
-    path('user_login/',home_views.user_login),
+    path('user_signup/', home_views.user_signup),
+    path('user_login/', home_views.user_login),
     path('profile/', home_views.profile),
     path('logout/', home_views.logout),
-    path('user_homepage/', home_views.homepage),
-    path('request/',home_views.request),
+    path('request/', home_views.request),
     path('available_request/', home_views.available_request),
     path('history/', home_views.history),
-    path('sp_homepage/', home_views.sp_homepage),
+    path('post/<int:pk>/', home_views.sp_request, name='sp_request'),
 ]
 

@@ -1,16 +1,30 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
+import pymysql
 # Create your views here.
-from .forms import NewServiceProvider, NewUser, ServiceProviderProfile, CustomerProfile, requestForm
+from .forms import NewServiceProvider, NewUser, ServiceProviderProfile, CustomerProfile, requestForm,Req
 from .models import ServiceProvider, Customer
 import datetime
 
+
 def home(request):
-    return render(request, 'sheba/home.html', {})
+    try:
+        return render(request, 'sheba/home.html', {'user_type': request.session['type']})
+    except KeyError:
+        return render(request, 'sheba/home.html', {'user_type': "not_logged"})
+
+
+def sp_request(request, pk):
+    to_update = Req.objects.get(id=pk)  # object to update
+    to_update.service_type = 6  # update name
+    to_update.save()  # save object
+    post = get_object_or_404(Req, pk=pk)
+    id = post.location
+    return redirect('/available_request/')
 
 
 def available_request(request):
@@ -30,6 +44,8 @@ def available_request(request):
 
 def logout(request):
     del request.session['user']
+    del request.session['type']
+
     return redirect('/')
 
 
@@ -73,21 +89,15 @@ def user_login(request):
             'SELECT id , password FROM service_provider WHERE id=%s AND password=%s',
             [pk, password])
 
-        cus_id = False
         for i in user_check:
-            cus_id = True
+            request.session['type'] = "user"
             found = True
         for i in sp_check:
+            request.session['type'] = "service_provider"
             found = True
         if found:
-            global LOGGED_IN
-            LOGGED_IN = pk
-
             request.session['user'] = pk
-            request.session['type'] = cus_id
-
-            print(cus_id)
-            return render(request,'sheba/user_homepage.html', {'cus_id':request.session['type']})
+            return render(request, 'sheba/home.html', {'user_type': request.session['type']})
 
         else:
             print("FAILED")
@@ -96,10 +106,9 @@ def user_login(request):
 
         try:
             pk = request.session['user']
-            return render(request, 'sheba/user_homepage.html', {'cus_id': request.session['type']})
+            return render(request, 'sheba/home.html', {'user_type': request.session['type']})
         except KeyError:
             return render(request, 'sheba/user_login.html', {'valid': True})
-
 
 
 def sp_signup(request):
@@ -132,15 +141,6 @@ def user_signup(request):
     return render(request, 'sheba/user_signup.html', {'form': form})
 
 
-def homepage(request):
-    #checking commit
-    #commit check1234
-    return render(request, 'sheba/user_homepage.html', {})
-def sp_homepage(request):
-    #checking commit
-    #commit check1234
-    return render(request, 'sheba/sp_homepage.html', {})
-
 def request(request):
     if request.method == 'GET':
         form = requestForm()
@@ -161,11 +161,11 @@ def request(request):
             form.save()
             #return render(request, 'sheba/user_homepage.html', {'cus_id': request.session['type']})
 
-
         else:
             print("not valid")
             messages.error(request, 'something went wrong')
-    return render(request, 'sheba/request.html',{'form':form})
+    return render(request, 'sheba/request.html', {'form': form})
+
 
 def history(request):
     cus_id_his = '\0'
@@ -179,7 +179,7 @@ def history(request):
         form = CustomerProfile()
         cus_id_his = obj.id
     all_his = User.objects.raw(
-        'SELECT * FROM req WHERE status LIKE ("complete") AND (customer=%s OR sp_id=%s)',[cus_id_his,sp_id_his]
+        'SELECT * FROM req'
     )
 
     return render(request, 'sheba/history.html', {'all_his':all_his})

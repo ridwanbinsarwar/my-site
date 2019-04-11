@@ -60,16 +60,15 @@
                       <div class="intro-text"><!-- css -->
                           <form method="post">
 
-
                           {% csrf_token %}
-                          {% if cus_id %}
+                          {% if user_type == "user" %}
                             <h1><span class="brand">Request</span></h1>
 
                           <!-- header button -->
                             <a href="/request" class="btn btn-default">Request Service</a>
 
                           {% endif %}
-                          {%if not cus_id%}
+                          {%if user_type == "service_provider" %}
                            <h1><span class="brand">Available Services</span></h1>
 
                           <!-- header button -->
