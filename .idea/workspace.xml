@@ -6,14 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="677d7dea-61ba-49b5-8a95-fee28fbc6d2a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/home/templates/sheba/available_request.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/home/templates/sheba/available_request.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/home/templates/sheba/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/home/templates/sheba/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/home/templates/sheba/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/home/templates/sheba/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/home/templates/sheba/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/home/templates/sheba/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/home/templates/sheba/request.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/home/templates/sheba/request.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/home/templates/sheba/user_homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/home/templates/sheba/user_homepage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/home/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/home/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/mysite/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/mysite/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,49 +34,28 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/home/templates/sheba/user_homepage.html">
+        <entry file="file://$PROJECT_DIR$/mysite/mysite/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1454">
-              <caret line="45" column="63" selection-start-line="45" selection-end-line="46" />
+            <state>
+              <caret line="42" column="1" lean-forward="true" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/mysite/home/templates/sheba/request.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/home/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="181" column="26" selection-start-line="181" selection-start-column="26" selection-end-line="181" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#24#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/home/templates/sheba/profile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-783">
-              <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
+            <state relative-caret-position="2299">
+              <caret line="152" column="7" lean-forward="true" selection-start-line="152" selection-start-column="7" selection-end-line="152" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/home/templates/sheba/home.html">
+        <entry file="file://$PROJECT_DIR$/mysite/home/templates/sheba/request.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
+            <state relative-caret-position="-621">
+              <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -91,8 +63,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/mysite/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="220">
+              <caret line="26" column="39" lean-forward="true" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
               <folding>
                 <element signature="e#630#662#0" expanded="true" />
               </folding>
@@ -103,8 +75,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/home/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3051">
-              <caret line="113" selection-start-line="113" selection-end-line="113" />
+            <state relative-caret-position="87">
+              <caret line="113" selection-start-line="112" selection-start-column="22" selection-end-line="113" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -112,25 +87,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysite/home/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
+            <state relative-caret-position="216">
               <caret line="8" selection-start-line="8" selection-end-line="8" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/home/apps.py">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysite/home/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81">
-              <caret line="3" selection-end-line="57" />
             </state>
           </provider>
         </entry>
@@ -197,11 +158,11 @@
         <option value="$PROJECT_DIR$/mysite/home/templates/sheba/available_request.html" />
         <option value="$PROJECT_DIR$/mysite/home/templates/sheba/user_homepage.html" />
         <option value="$PROJECT_DIR$/mysite/home/templates/sheba/base.html" />
-        <option value="$PROJECT_DIR$/mysite/home/templates/sheba/profile.html" />
         <option value="$PROJECT_DIR$/mysite/mysite/urls.py" />
         <option value="$PROJECT_DIR$/mysite/home/templates/sheba/home.html" />
         <option value="$PROJECT_DIR$/mysite/home/views.py" />
         <option value="$PROJECT_DIR$/mysite/home/templates/sheba/request.html" />
+        <option value="$PROJECT_DIR$/mysite/home/templates/sheba/profile.html" />
       </list>
     </option>
   </component>
@@ -257,11 +218,6 @@
               <item name="mysite" type="462c0819:PsiDirectoryNode" />
               <item name="mysite" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Project" type="462c0819:PsiDirectoryNode" />
-              <item name="myvenv" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -278,16 +234,16 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\7th Trimester\DBMS LAB\Project\Project\mysite\temp\static" />
+      <recent name="E:\7th Trimester\DBMS LAB\Project\Project" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\temp" />
       <recent name="E:\temp\mysite" />
       <recent name="E:\7th Trimester\DBMS LAB\Project\Project\mysite\home\templates\sheba" />
       <recent name="E:\7th Trimester\DBMS LAB\Project\Project\mysite\home" />
       <recent name="E:\7th Trimester\DBMS LAB\Project\Project\mysite\temp" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\7th Trimester\DBMS LAB\Project\Project\mysite\temp\static" />
-      <recent name="E:\7th Trimester\DBMS LAB\Project\Project" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -451,7 +407,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="91593000" />
+    <option name="totallyTimeSpent" value="92632000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -466,7 +422,7 @@
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14228188" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20671141" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -479,8 +435,8 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.20496084" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.13446476" />
-      <window_info anchor="bottom" id="Python Console" order="11" weight="0.32733223" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.25718015" />
+      <window_info anchor="bottom" id="Python Console" order="11" weight="0.32637075" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="bottom" id="Inspection Results" order="13" weight="0.32898173" />
       <window_info anchor="bottom" id="Messages" order="14" />
@@ -697,8 +653,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/mysite/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3483">
-          <caret line="129" selection-start-line="129" selection-end-line="129" />
+        <state>
+          <caret line="42" column="1" lean-forward="true" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -725,14 +681,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/home/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3051">
-          <caret line="113" selection-start-line="113" selection-end-line="113" />
+        <state relative-caret-position="87">
+          <caret line="113" selection-start-line="112" selection-start-column="22" selection-end-line="113" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/home/admin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
+        <state relative-caret-position="216">
           <caret line="8" selection-start-line="8" selection-end-line="8" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
@@ -766,18 +725,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/mysite/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="220">
+          <caret line="26" column="39" lean-forward="true" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
           <folding>
             <element signature="e#630#662#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysite/home/templates/sheba/profile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-783">
-          <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -807,8 +759,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysite/home/templates/sheba/request.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+        <state relative-caret-position="-621">
+          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysite/home/templates/sheba/profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2299">
+          <caret line="152" column="7" lean-forward="true" selection-start-line="152" selection-start-column="7" selection-end-line="152" selection-end-column="7" />
         </state>
       </provider>
     </entry>
