@@ -31,5 +31,7 @@ urlpatterns = [
     path('available_request/', home_views.available_request),
     path('history/', home_views.history),
     path('post/<int:pk>/', home_views.sp_request, name='sp_request'),
+    path('request_searching/', home_views.request_searching),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

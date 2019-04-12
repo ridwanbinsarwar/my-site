@@ -1,6 +1,5 @@
 from django.db import models
-
-
+from geopy import geocoders
 
 
 # Create your models here.
@@ -61,6 +60,9 @@ class ServiceProvider(models.Model):
     verified = models.IntegerField(blank=True, null=True)
     password = models.CharField(max_length=30, blank=False, null=False)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    lat = models.FloatField()
+    lon = models.FloatField()
+    radius = models.IntegerField()
 
     class Meta:
         managed = False
@@ -96,14 +98,16 @@ class Request(models.Model):
 
 
 class Req(models.Model):
-    location = models.CharField(max_length=50, blank=True, null=True)
+    location = models.CharField(max_length=150, blank=True, null=True)
     service_type = models.IntegerField(blank=True, null=True)
     customer = models.CharField(max_length=30, blank=True, null=True)
     status = models.CharField(max_length=30, blank=True, null=False)
     start_time = models.CharField(max_length=20)
     end_time = models.CharField(max_length=20)
     sp = models.ForeignKey('ServiceProvider', models.DO_NOTHING, blank=True, null=True)
-
+    lat = models.FloatField()
+    lon = models.FloatField()
+    radius = models.IntegerField()
 
 
     class Meta:
@@ -113,5 +117,3 @@ class Req(models.Model):
     def __str__(self):
         return self.id
 
-class check_field(models.Model):
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')

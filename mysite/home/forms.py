@@ -53,6 +53,6 @@ class CustomerProfile(forms.ModelForm):
 class requestForm(forms.ModelForm):
     class Meta:
         model = Req
-        fields = ['location', 'customer', 'service_type', 'status', 'start_time', 'end_time']
+        fields = ['location', 'customer', 'service_type', 'status', 'start_time', 'end_time', 'lat', 'lon', 'radius']
 
 

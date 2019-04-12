@@ -5,10 +5,19 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 import connection
+
 # Create your views here.
 from .forms import NewServiceProvider, NewUser, ServiceProviderProfile, CustomerProfile, requestForm,Req
 from .models import ServiceProvider, Customer
 import datetime
+
+
+def request_searching(request):
+    requested = User.objects.raw(
+            'SELECT * FROM req WHERE status LIKE ("requested") and customer=%s', [request.session['user']]
+            )
+
+    return render(request, 'sheba/request_searching.html', {'request': requested})
 
 
 def home(request):
@@ -20,7 +29,8 @@ def home(request):
 
 def sp_request(request, pk):
     to_update = Req.objects.get(id=pk)  # object to update
-    to_update.service_type = 6  # update name
+    to_update.status = "requested"
+    to_update.sp = ServiceProvider.objects.get(id=request.session['user'])  # creating foreign key
     to_update.save()  # save object
     post = get_object_or_404(Req, pk=pk)
     id = post.location
@@ -33,12 +43,21 @@ def available_request(request):
 
         print(p.get('service_type', False))
     obj = ServiceProvider.objects.get(pk=request.session['user'])
-    form = ServiceProviderProfile()
-    type = obj.service_type
-    all_req =  User.objects.raw(
-            'SELECT * FROM req WHERE status LIKE ("pending") AND service_type = %s',[type]
-            )
+    to_update = ServiceProvider.objects.get(id=request.session['user'])
+    lat1 =to_update.lat
+    lat1 = float(lat1)
+    print(lat1)
 
+    lon1 = to_update.lon
+    distance_unit = 3959
+    radius = to_update.radius
+    all_req =  User.objects.raw(
+            'SELECT * FROM req WHERE status LIKE ("pending")'
+            )
+    all_req = User.objects.raw(
+            'SELECT *, (6371 *acos(cos(radians(%s)) * cos(radians(lat)) * cos(radians(lon) - radians(%s)) + sin(radians(%s)) * sin(radians(lat )))) AS distance FROM req WHERE status LIKE("Pending") HAVING distance < 1.3  ORDER BY distance LIMIT 0, 20',[lat1, lon1, lat1])
+    for req in all_req:
+        print(req.status)
     return render(request, 'sheba/available_request.html', {'all_req' : all_req})
 
 
@@ -164,10 +183,10 @@ def request(request):
         if form.is_valid():
 
             print("valid")
-            #form.data['customer'] = "123"
+            # form.data['customer'] = "123"
             print(form)
             form.save()
-            #return render(request, 'sheba/user_homepage.html', {'cus_id': request.session['type']})
+            # return render(request, 'sheba/user_homepage.html', {'cus_id': request.session['type']})
 
         else:
             print("not valid")

@@ -1,0 +1,48 @@
+{% load static %}
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+
+
+</head>
+
+<body>
+
+ <nav id = "menu" class="navbar navbar-inverse">
+  <ul class="nav navbar-nav">
+    <li><a href="/">HOME</a></li>
+  </ul>
+</nav>
+
+
+<form method="post" action="" >
+    {% csrf_token %}
+
+    {% for req in request %}
+        <p1>{{req.sp_id}}</p1>
+    {% endfor %}
+</form>
+
+
+<div id="footer">
+  <div class="container text-center">
+    <div class="fnav">
+      <p>Copyright &copy; 2019 CycloCoder. Designed by Sheba</p>
+    </div>
+  </div>
+</div>
+
+
+</body>
+
+<script>
+    window.setTimeout(function () {
+    location.href = "";
+}, 3500); // refresh/redirect after 5 seconds.
+</script>
