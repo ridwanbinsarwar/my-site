@@ -1,5 +1,4 @@
 from django.db import models
-from geopy import geocoders
 
 
 # Create your models here.
@@ -37,7 +36,7 @@ class Customer(models.Model):
     id = models.CharField(db_column='ID', primary_key=True, max_length=30)  # Field name made lowercase.
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    birth_day = models.DateField()
+    birth_day = models.DateField(blank=True, null=True)
     email = models.CharField(max_length=50, blank=True, null=False)
     contact_no = models.CharField(max_length=11, blank=False, null=False)
     city = models.CharField(max_length=50)
@@ -45,7 +44,8 @@ class Customer(models.Model):
     rating = models.IntegerField(blank=True, null=True)
     password = models.CharField(max_length=30, blank=False, null=False)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-
+    lat = models.FloatField(null=False, blank=True, default=23.758642)
+    lon = models.FloatField(null=False, blank=True, default=90.390171)
 
     class Meta:
         managed = False
@@ -59,7 +59,7 @@ class ServiceProvider(models.Model):
     id = models.CharField(db_column='ID', unique=True, max_length=30, blank=False, null=False, primary_key=True)  # Field name made lowercase.
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    birth_day = models.DateField()
+    birth_day = models.DateField(blank=True, null=True)
     email = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     contact_no = models.CharField(max_length=11, blank=True, null=False)
@@ -69,8 +69,8 @@ class ServiceProvider(models.Model):
     verified = models.IntegerField(blank=True, null=True)
     password = models.CharField(max_length=30, blank=False, null=False)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-    lat = models.FloatField()
-    lon = models.FloatField()
+    lat = models.FloatField(null=False, blank=True, default=23.758642)
+    lon = models.FloatField(null=False, blank=True, default=90.390171)
     radius = models.IntegerField()
 
     class Meta:

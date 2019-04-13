@@ -4,7 +4,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-import connection
 
 # Create your views here.
 from .forms import NewServiceProvider, NewUser, ServiceProviderProfile, CustomerProfile, requestForm,Req, NewMessage
@@ -129,13 +128,15 @@ def profile(request):
     if request.method == 'POST':
         if user:
             form = ServiceProviderProfile(request.POST, request.FILES, instance=obj)
+
         else:
             form = CustomerProfile(request.POST, request.FILES, instance=obj)
 
         if form.is_valid():
             form.save()
             print(form)
-        return render(request, 'sheba/profile.html', {'form': form, 'user': obj})
+
+        return render(request, 'sheba/profile.html', {'form': form, 'user': obj,'user_type': request.session['type']})
     else:
         if user:
             form = ServiceProviderProfile()
@@ -143,7 +144,7 @@ def profile(request):
             form = CustomerProfile()
             user = False
 
-        return render(request, 'sheba/profile.html', {'form': form, 'user': obj})
+        return render(request, 'sheba/profile.html', {'form': form, 'user': obj,'user_type': request.session['type']})
 
 
 def user_login(request):

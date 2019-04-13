@@ -45,14 +45,14 @@ class ServiceProviderProfile(forms.ModelForm):
 
     class Meta:
         model = ServiceProvider
-        fields = ['first_name', 'last_name', 'contact_no', 'city', 'email', 'image', 'lon', 'lat']
+        fields = ['first_name', 'last_name', 'contact_no', 'city', 'email', 'image', 'lon', 'lat','birth_day']
 
 
 class CustomerProfile(forms.ModelForm):
 
     class Meta:
         model = Customer
-        fields = ['first_name', 'last_name', 'contact_no', 'city', 'email', 'image']
+        fields = ['first_name', 'last_name', 'contact_no', 'city', 'email', 'image', 'lon', 'lat']
 
 
 class requestForm(forms.ModelForm):

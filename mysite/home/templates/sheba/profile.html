@@ -63,10 +63,15 @@
                 <li class="active"><a data-toggle="tab" href="#home">profile</a></li>
                 <li><a data-toggle="tab" href="#location">location</a></li>
                 <li><a data-toggle="tab" href="#settings">settings</a></li>
+
+                {% if user_type == 'service_provider'%}
+                <li><a data-toggle="tab" href="#review">reviews</a></li>
+                {% endif %}
               </ul>
 
 
           <div class="tab-content">
+
 
               <div id="location" class="tab-pane fade"> <!-- location !-->
                         Location: <input name="location" type="text" id="us2-address" style="width: 200px"/>
@@ -74,8 +79,11 @@
                         <div id="us2" style="width: 500px; height: 400px;"></div>
                         Lat.: <input name="lat" type="text" value="{{user.lat}}" id="us2-lat"/>
                         Long.: <input name="lon" type="text" value="{{user.lon}}" id="us2-lon"/>
-           </div>
+              </div>
 
+                <div id="review" class="tab-pane fade"> <!-- location !-->
+                        <p>dfjkdfjnjk</p>
+              </div>
 
             <div class="tab-pane active" id="home">
                 <hr>
@@ -123,8 +131,17 @@
                               <input type="text" name="city" class="form-control" size="45" value="{{user.city}}" title="enter a location" required>
                               </label>
                           </div>
-                      </div>
 
+                      </div>
+                        <div class="form-group">
+
+                          <div class="col-xs-6">
+                              <label><h4>Birth Date</h4>
+                              <input type="date" name="birth_day" class="form-control" size="45" value="{{user.birth_day}}" title="enter a location" required>
+                              </label>
+                          </div>
+
+                      </div>
               {% if form.errors %}
                 {% for field in form %}
                     {% for error in field.errors %}
