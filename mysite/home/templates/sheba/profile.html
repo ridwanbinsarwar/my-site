@@ -8,6 +8,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=AIzaSyALNPHGbxTegKMp_LwOdenv8xFEzkPvIcA&callback=initMap'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-locationpicker/0.1.12/locationpicker.jquery.min.js"></script>
 
 
 
@@ -58,12 +61,22 @@
     	<div class="col-sm-9">
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#home">profile</a></li>
-                <li><a data-toggle="tab" href="#messages">message</a></li>
+                <li><a data-toggle="tab" href="#location">location</a></li>
                 <li><a data-toggle="tab" href="#settings">settings</a></li>
               </ul>
 
 
           <div class="tab-content">
+
+              <div id="location" class="tab-pane fade"> <!-- location !-->
+                        Location: <input name="location" type="text" id="us2-address" style="width: 200px"/>
+                        Radius: <input name="radius" type="text" id="us2-radius"/>
+                        <div id="us2" style="width: 500px; height: 400px;"></div>
+                        Lat.: <input name="lat" type="text" value="{{user.lat}}" id="us2-lat"/>
+                        Long.: <input name="lon" type="text" value="{{user.lon}}" id="us2-lon"/>
+           </div>
+
+
             <div class="tab-pane active" id="home">
                 <hr>
 
@@ -153,3 +166,19 @@
   </div>
 </div>
 </body>
+
+<script>
+    $('#us2').locationpicker({
+        location: {
+            latitude: {{user.lat}},
+            longitude: {{user.lon}}
+        },
+        radius: 300,
+        inputBinding: {
+            latitudeInput: $('#us2-lat'),
+            longitudeInput: $('#us2-lon'),
+            radiusInput: $('#us2-radius'),
+            locationNameInput: $('#us2-address'),
+        }
+    });
+</script>

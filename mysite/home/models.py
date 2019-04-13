@@ -3,14 +3,19 @@ from geopy import geocoders
 
 
 # Create your models here.
-class Users(models.Model):
-    user_email = models.CharField(primary_key=True, max_length=255)
-    user_password = models.CharField(max_length=255)
-    user_type = models.IntegerField()
+class MessagesUser(models.Model):
+    id = models.AutoField(primary_key=True)
+    sender = models.CharField(max_length=50, blank=True, null=True)
+    reciever = models.CharField(max_length=50, blank=True, null=True)
+    details = models.CharField(max_length=255, blank=True, null=True)
+    time = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'users'
+        db_table = 'home_messagesuser'
+
+    def __str__(self):
+        return self.id
 
 
 class Admin(models.Model):
@@ -32,12 +37,15 @@ class Customer(models.Model):
     id = models.CharField(db_column='ID', primary_key=True, max_length=30)  # Field name made lowercase.
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    birth_day = models.DateField()
     email = models.CharField(max_length=50, blank=True, null=False)
     contact_no = models.CharField(max_length=11, blank=False, null=False)
     city = models.CharField(max_length=50)
     nid = models.IntegerField(db_column='NID', blank=True, null=False)  # Field name made lowercase.
     rating = models.IntegerField(blank=True, null=True)
     password = models.CharField(max_length=30, blank=False, null=False)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+
 
     class Meta:
         managed = False
@@ -51,6 +59,7 @@ class ServiceProvider(models.Model):
     id = models.CharField(db_column='ID', unique=True, max_length=30, blank=False, null=False, primary_key=True)  # Field name made lowercase.
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    birth_day = models.DateField()
     email = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     contact_no = models.CharField(max_length=11, blank=True, null=False)
@@ -80,23 +89,6 @@ class Location(models.Model):
         db_table = 'location'
 
 
-
-class Request(models.Model):
-    customer = models.ForeignKey(Customer, models.DO_NOTHING, primary_key=True)
-    service_provider = models.ForeignKey('ServiceProvider', models.DO_NOTHING)
-    location = models.ForeignKey(Location, models.DO_NOTHING, db_column='location')
-    service_type = models.CharField(max_length=10)
-    date_field = models.DateTimeField(db_column='date_', blank=True, null=True)  # Field renamed because it ended with '_'.
-    rating = models.IntegerField(blank=True, null=True)
-    review = models.TextField(blank=True, null=True)
-    status_field = models.CharField(db_column='status_', max_length=20, blank=True, null=True)  # Field renamed because it ended with '_'.
-
-    class Meta:
-        managed = False
-        db_table = 'request'
-        unique_together = (('customer', 'service_provider'),)
-
-
 class Req(models.Model):
     location = models.CharField(max_length=150, blank=True, null=True)
     service_type = models.IntegerField(blank=True, null=True)
@@ -116,4 +108,5 @@ class Req(models.Model):
 
     def __str__(self):
         return self.id
+
 

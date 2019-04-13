@@ -12,8 +12,9 @@
 
           {% csrf_token %}
     <div class="container">
-      <h1>Sign Up as Customer</h1>
-      <p>Please fill in this form to create an account.</p>
+            <div class="w3-container w3-brown">
+    <h2 align="center">Create A New Account</h2>
+  </div>
       <hr>
       <label ><b>Email</b></label>
       <input type="text" placeholder="Enter Email" name="id" id ="id" required>
@@ -24,6 +25,8 @@
       <label ><b>Repeat Password</b></label>
       <input type="password" placeholder="Repeat Password" name="re_password" id="re_password" required>
 
+        <input type="checkbox" name="checkboxG5" id="checkboxG5"  checked="checked"/>
+		<label for="checkboxG5" class="css-label">I agree with the terms and condition</label>
 
 
         {% if form.errors %}
@@ -45,6 +48,12 @@
         <button type="button" onclick="window.location.href='/'" class="cancelbtn">Cancel</button>
         <button type="submit" class="signupbtn">Sign Up</button>
       </div>
+                  <div >
+                <p align="center"><b>Already have an account?</b></p>
+				<a href="#">
+                    <p align="center"><b>login now</b></p>
+				</a>
+          </div>
     </div>
   </form>
 

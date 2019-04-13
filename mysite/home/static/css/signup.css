@@ -1,3 +1,9 @@
+
+
+.w3-container{
+  size: 500px;
+}
+.w3-brown,.w3-hover-brown:hover{padding: 1px; color:#fff!important;background-color: #175362 !important}
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}
 
@@ -9,6 +15,38 @@ input[type=text], input[type=password] {
   display: inline-block;
   border: none;
   background: #f1f1f1;
+}
+b {
+  color: #175362;
+}
+a {
+	color: #000000;
+}
+a:hover, a:focus {
+	text-decoration: none;
+	color: #175362;
+}
+ul, ol {
+	list-style: none;
+}
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+.clearfix {
+  padding-top: 20px;
+	display: inline-block;
+  padding-bottom: 20px;
+}
+* html .clearfix {
+	height: 1%;
+}
+.clearfix {
+	display: block;
 }
 
 /* Add a background color when the inputs get focus */
@@ -49,7 +87,7 @@ button:hover {
 .container {
   padding: 16px;
   max-width: 400px;
-  border: 3px solid #25BAD0;
+  border: 3px solid #175362;
   margin: 0 auto;
 }
 

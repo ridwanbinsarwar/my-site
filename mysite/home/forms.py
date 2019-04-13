@@ -1,7 +1,12 @@
 from django import forms
 
 
-from .models import ServiceProvider, Customer, Req
+from .models import ServiceProvider, Customer, Req, MessagesUser
+
+class NewMessage(forms.ModelForm):
+    class Meta:
+        model = MessagesUser
+        fields = ['time', 'details', 'sender', 'reciever']
 
 
 class NewServiceProvider(forms.ModelForm):
@@ -40,14 +45,14 @@ class ServiceProviderProfile(forms.ModelForm):
 
     class Meta:
         model = ServiceProvider
-        fields = ['first_name', 'last_name', 'contact_no', 'city', 'email', 'image']
+        fields = ['first_name', 'last_name', 'contact_no', 'city', 'email', 'image', 'lon', 'lat']
 
 
 class CustomerProfile(forms.ModelForm):
 
     class Meta:
         model = Customer
-        fields = ['first_name', 'last_name', 'contact_no', 'city', 'email']
+        fields = ['first_name', 'last_name', 'contact_no', 'city', 'email', 'image']
 
 
 class requestForm(forms.ModelForm):

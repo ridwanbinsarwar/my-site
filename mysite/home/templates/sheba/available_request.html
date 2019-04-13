@@ -10,20 +10,92 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
+<style>
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding-left: 100px;
+  margin: 10px 0;
+    max-width: 800px;
+}
 
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.container img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+.container img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+.time-left {
+  float: left;
+  color: #999;
+}
+</style>
 
 </head>
 <body>
 <form method="post" action="">
     {%csrf_token%}
-    {%for req in all_req%}
+    <div class="container-fluid">
+     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+         {%for req in all_req%}
+            <p>{{req.service_type}}</p>
+            <input type="text" placeholder="Enter Email" name="location" value="{{req.location}}" id ="service_type" required>
+            <a type="button" href="{% url 'sp_request' pk=req.pk %}" class="signupbtn">Log In</a>
+        {%endfor%}
+     </div>
+     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
-      <p>{{req.service_type}}</p>
+         {% for sp in sp_messages %}
+         <div class="container darker">
+             <p>{{sp.details}}</p>
+             <span class="time-right">11:00</span>
+         </div>
+         {% endfor%}
 
-      <input type="text" placeholder="Enter Email" name="location" value="{{req.location}}" id ="service_type" required>
-        <a type="button" href="{% url 'sp_request' pk=req.pk %}" class="signupbtn">Log In</a>
+
+         {% for sp in user_messages %}
+         <div class="container">
+             <p>{{sp.details}}</p>
+             <span class="time-right">11:00</span>
+         </div>
+         {% endfor%}
 
 
-    {%endfor%}</form>
+         <div class="form-group">
+            <label for="usr">Message:</label>
+            <input type="text" name="details" class="form-control" id="usr">
+        </div>
+     </div>
+     <div>
+     </div>
+ </div>
+
+</form>
 </body>
 </html>
+<!--<script>-->
+    <!--window.setTimeout(function () {-->
+    <!--location.href = "";-->
+<!--}, 9500); // refresh/redirect after 5 seconds.-->
+<!--</script>-->

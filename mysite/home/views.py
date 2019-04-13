@@ -7,17 +7,47 @@ from django.contrib import messages
 import connection
 
 # Create your views here.
-from .forms import NewServiceProvider, NewUser, ServiceProviderProfile, CustomerProfile, requestForm,Req
+from .forms import NewServiceProvider, NewUser, ServiceProviderProfile, CustomerProfile, requestForm,Req, NewMessage
 from .models import ServiceProvider, Customer
 import datetime
 
 
 def request_searching(request):
+    message_form = NewMessage()
+    customer = "customer"
     requested = User.objects.raw(
-            'SELECT * FROM req WHERE status LIKE ("requested") and customer=%s', [request.session['user']]
-            )
+        'SELECT * FROM req WHERE status LIKE ("requested") and customer=%s LIMIT 1', [request.session['user']]
+    )
+    try:
+        interested_sp = requested[0].sp_id
+        user_message = User.objects.raw(
+            'SELECT * FROM home_messagesuser WHERE sender LIKE (%s) and reciever LIKE (%s) ORDER BY time DESC LIMIT 5',
+                [request.session['user'], interested_sp])
+        sp_message = User.objects.raw(
+            'SELECT * FROM home_messagesuser WHERE reciever LIKE (%s) and sender LIKE (%s) ORDER BY time ASC LIMIT 5',
+                [request.session['user'], interested_sp])
 
-    return render(request, 'sheba/request_searching.html', {'request': requested})
+        if request.method == "GET":
+            return render(request, 'sheba/request_searching.html',
+                      {'request': requested, 'user_messages': user_message, 'sp_messages': sp_message, 'form': message_form})
+        else:
+            mutable = request.POST._mutable
+            print(request.POST)
+            request.POST._mutable = True
+            request.POST['sender'] = request.session['user']
+            request.POST['reciever'] = interested_sp
+            request.POST['time'] = datetime.datetime.now()
+            request.POST._mutable = mutable
+            form = NewMessage(request.POST)
+            if request.method == "POST":
+                if form.is_valid():
+                    form.save()
+                    return redirect('/request_searching/')
+    except IndexError:
+        return render(request, 'sheba/request_searching.html', {'found': "ok"})
+
+    return render(request, 'sheba/request_searching.html',
+                  {'request': requested, 'user_messages': user_message, 'sp_messages': sp_message,'form': message_form})
 
 
 def home(request):
@@ -29,35 +59,50 @@ def home(request):
 
 def sp_request(request, pk):
     to_update = Req.objects.get(id=pk)  # object to update
+    request.session['key'] = pk
+    print(pk)
     to_update.status = "requested"
     to_update.sp = ServiceProvider.objects.get(id=request.session['user'])  # creating foreign key
+    user = to_update.customer
     to_update.save()  # save object
-    post = get_object_or_404(Req, pk=pk)
-    id = post.location
-    return redirect('/available_request/')
+
+    message_form = NewMessage()
+
+    user_message = User.objects.raw(
+        'SELECT * FROM home_messagesuser WHERE sender LIKE (%s) and reciever LIKE (%s) ORDER BY time DESC LIMIT 5',
+            [request.session['user'], user])
+    sp_message = User.objects.raw(
+        'SELECT * FROM home_messagesuser WHERE reciever LIKE (%s) and sender LIKE (%s) ORDER BY time ASC LIMIT 5',
+            [request.session['user'], user])
+
+    if request.method == "GET":
+        return render(request, 'sheba/available_request.html',
+                  {'request': to_update, 'user_messages': user_message, 'sp_messages': sp_message, 'form': message_form})
+    else:
+        mutable = request.POST._mutable
+        print(request.POST)
+        request.POST._mutable = True
+        request.POST['sender'] = request.session['user']
+        request.POST['reciever'] = user
+        request.POST['time'] = datetime.datetime.now()
+        request.POST._mutable = mutable
+        form = NewMessage(request.POST)
+        if request.method == "POST":
+            if form.is_valid():
+                form.save()
+                return render(request, 'sheba/available_request.html',
+                              {'request': to_update, 'user_messages': user_message, 'sp_messages': sp_message,
+                               'form': message_form})
+    return render(request, 'sheba/available_request.html',
+                  {'request': to_update, 'user_messages': user_message, 'sp_messages': sp_message,'form': message_form})
 
 
 def available_request(request):
-    if request.method == 'POST':
-        p = request.POST
-
-        print(p.get('service_type', False))
-    obj = ServiceProvider.objects.get(pk=request.session['user'])
     to_update = ServiceProvider.objects.get(id=request.session['user'])
     lat1 =to_update.lat
-    lat1 = float(lat1)
-    print(lat1)
-
     lon1 = to_update.lon
-    distance_unit = 3959
-    radius = to_update.radius
-    all_req =  User.objects.raw(
-            'SELECT * FROM req WHERE status LIKE ("pending")'
-            )
     all_req = User.objects.raw(
             'SELECT *, (6371 *acos(cos(radians(%s)) * cos(radians(lat)) * cos(radians(lon) - radians(%s)) + sin(radians(%s)) * sin(radians(lat )))) AS distance FROM req WHERE status LIKE("Pending") HAVING distance < 1.3  ORDER BY distance LIMIT 0, 20',[lat1, lon1, lat1])
-    for req in all_req:
-        print(req.status)
     return render(request, 'sheba/available_request.html', {'all_req' : all_req})
 
 
@@ -77,17 +122,15 @@ def profile(request):
 
     try:
         obj = ServiceProvider.objects.get(pk=request.session['user'])
-        # form = ServiceProviderProfile()
     except ObjectDoesNotExist:
         obj = Customer.objects.get(pk=request.session['user'])
-        # form = CustomerProfile()
         user = False
 
     if request.method == 'POST':
         if user:
             form = ServiceProviderProfile(request.POST, request.FILES, instance=obj)
         else:
-            form = CustomerProfile(request.POST, instance=obj)
+            form = CustomerProfile(request.POST, request.FILES, instance=obj)
 
         if form.is_valid():
             form.save()
@@ -107,7 +150,7 @@ def user_login(request):
     if request.method == 'POST':
         pk = request.POST["id"]
         password = request.POST["password"]
-
+        print(pk, password)
         found = False
         user_check = User.objects.raw(
             'SELECT id , password FROM Customer WHERE id=%s AND password=%s',
