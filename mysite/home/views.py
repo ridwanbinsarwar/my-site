@@ -7,8 +7,43 @@ from django.contrib import messages
 
 # Create your views here.
 from .forms import NewServiceProvider, NewUser, ServiceProviderProfile, CustomerProfile, requestForm,Req, NewMessage
-from .models import ServiceProvider, Customer
 import datetime
+from .models import ServiceProvider, Customer
+
+def refresh_check(request):
+    print("_______==========__________")
+
+def delete_request(request, pk):
+    try:
+        to_update = Req.objects.get(id=pk)  # object to update
+        to_update.delete()
+    except ObjectDoesNotExist:
+        return redirect('/request/')
+
+    return redirect('/request/')
+
+
+def searching_service_provider(request):
+    requested = User.objects.raw(
+        'SELECT *,count(*) as cnt FROM req WHERE status LIKE ("pending") or status LIKE ("requested") and customer=%s LIMIT 1'
+        , [request.session['user']]
+    )  # checking request status "pending" or "requested"
+    if requested[0].cnt == 0:
+        print(requested[0].cnt)
+        return redirect('/request/')
+    interested = User.objects.raw(
+        'SELECT * FROM req WHERE status LIKE ("requested") and customer=%s LIMIT 1', [request.session['user']]
+    )
+
+    try:
+        interested_sp = interested[0].sp_id
+        service_provider = ServiceProvider.objects.get(id=interested_sp)
+        return render(request, 'sheba/searching_service_provider.html', {'request': interested,
+                                                                         'service_provider': service_provider,
+                                                                         'found': "found"})
+
+    except IndexError:
+        return render(request, 'sheba/searching_service_provider.html', {'request': requested, 'found': "notfound"})
 
 
 def request_searching(request):
@@ -102,7 +137,7 @@ def available_request(request):
     lon1 = to_update.lon
     all_req = User.objects.raw(
             'SELECT *, (6371 *acos(cos(radians(%s)) * cos(radians(lat)) * cos(radians(lon) - radians(%s)) + sin(radians(%s)) * sin(radians(lat )))) AS distance FROM req WHERE status LIKE("Pending") HAVING distance < 1.3  ORDER BY distance LIMIT 0, 20',[lat1, lon1, lat1])
-    return render(request, 'sheba/available_request.html', {'all_req' : all_req})
+    return render(request, 'sheba/available_request.html', {'all_req': all_req})
 
 
 def logout(request):
@@ -212,8 +247,22 @@ def user_signup(request):
     return render(request, 'sheba/user_signup.html', {'form': form})
 
 
+def user_request_valid(request):
+    requested = User.objects.raw(
+        'SELECT *,count(*) as cnt FROM req WHERE status NOT LIKE ("complete") and customer=%s LIMIT 1',
+        [request.session['user']]
+    )  # checking if user currently has ongoing or requested or pending "request"
+    print("**********____________________*****************")
+    if requested[0].cnt > 0:
+        print(requested[0].cnt)
+        return False
+    return True
+
+
 def request(request):
     if request.method == 'GET':
+        if not user_request_valid(request):
+            return redirect('/searching_service_provider/')
         form = requestForm()
     else:
         mutable = request.POST._mutable
@@ -225,15 +274,13 @@ def request(request):
 
         form = requestForm(request.POST)
         if form.is_valid():
-
+            if user_request_valid(request):
+                form.save()
             print("valid")
-            # form.data['customer'] = "123"
             print(form)
-            form.save()
-            # return render(request, 'sheba/user_homepage.html', {'cus_id': request.session['type']})
+            return redirect('/searching_service_provider/')  # redirect to request searching page
 
         else:
-            print("not valid")
             messages.error(request, 'something went wrong')
     return render(request, 'sheba/request.html', {'form': form})
 

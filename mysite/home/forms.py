@@ -3,6 +3,7 @@ from django import forms
 
 from .models import ServiceProvider, Customer, Req, MessagesUser
 
+
 class NewMessage(forms.ModelForm):
     class Meta:
         model = MessagesUser

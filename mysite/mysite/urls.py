@@ -32,6 +32,8 @@ urlpatterns = [
     path('history/', home_views.history),
     path('post/<int:pk>/', home_views.sp_request, name='sp_request'),
     path('request_searching/', home_views.request_searching),
-
+    path('searching_service_provider/', home_views.searching_service_provider),
+    path('del/<int:pk>/', home_views.delete_request, name="delete_request"),
+    path('refresh_check/', home_views.refresh_check),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
