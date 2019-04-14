@@ -10,9 +10,47 @@ import datetime
 from .models import ServiceProvider, Customer
 
 
+def request_complete(request, pk):
+    if request.method == "GET":
+        obj = Req.objects.get(id=pk)
+        obj1 = ServiceProvider.objects.get(id=obj.sp_id)
+        obj.status = "complete"
+        obj.save()
+        form = ServiceProviderProfile(request.POST, instance=obj1)
+
+        return render(request, 'sheba/request_complete.html', {'request': obj, 'sp': obj1, 'form': form})
+
+
+
+def todo_mark(request,pk):
+    obj = Todo.objects.get(id=pk)
+    obj.status = 1
+    obj.save()
+    return redirect('/ongoing_request')
+
+
+def todo_delete(request,pk):
+    obj = Todo.objects.get(id=pk)
+    obj.delete()
+    return redirect('/ongoing_request')
+
+
+def todo_add(request,pk):
+    mutable = request.POST._mutable
+    request.POST._mutable = True
+    request.POST['req_id'] = pk
+    request.POST._mutable = mutable
+    if request.method == "POST":
+        form = NewTodo(request.POST)
+        if form.is_valid():
+            print("valid")
+            form.save()
+
+    return redirect('/ongoing_request')
+
+
 def ongoing_request(request):
     message_form = NewMessage()
-
     if request.session['type'] == "user":
         requested = User.objects.raw('SELECT * FROM req WHERE status LIKE ("confirmed") and customer=%s LIMIT 1',
                                      [request.session['user']])
@@ -23,7 +61,8 @@ def ongoing_request(request):
         if obj.status == "pending":
             return redirect('/available_request')
     try:
-        req_id = requested[0].id
+        reqid = requested[0].id
+        todo_form = NewTodo()
         interested_sp = requested[0].sp_id
         user = requested[0].customer
         user_message = User.objects.raw(
@@ -31,12 +70,14 @@ def ongoing_request(request):
                 [user, interested_sp, user, interested_sp])
 
         todo_list = User.objects.raw(
-            'SELECT * FROM todo WHERE req_id = %s', [req_id])
+            'SELECT * FROM todo WHERE req_id = %s', [reqid])
 
         if request.method == "GET":
             # print(request.session['type'])
             return render(request, 'sheba/ongoing_request.html',
-                          {'request': requested, 'user_messages': user_message, 'form': message_form, 'user': request.session['user'], 'type': request.session['type']})
+                          {'request': requested, 'user_messages': user_message, 'form': message_form,
+                           'user': request.session['user'], 'type': request.session['type'], 'todo': todo_form ,
+                           'todo_list': todo_list})
         else:
             mutable = request.POST._mutable
             print(request.POST)
@@ -59,7 +100,9 @@ def ongoing_request(request):
         return render(request, 'sheba/request.html', {'found': "ok"})
 
     return render(request, 'sheba/ongoing_request.html',
-                  {'request': requested, 'user_messages': user_message, 'form': message_form, 'user': request.session['user'],'type': request.session['type']})
+                  {'request': requested, 'user_messages': user_message, 'form': message_form,
+                   'user': request.session['user'],'type': request.session['type'],  'todo': todo_form,
+                   'todo_list': todo_list})
 
 
 def refresh_check(request):
@@ -132,8 +175,8 @@ def sp_request(request, pk):
     sp.status = "confirmed"
     sp.save()
 
-    foo_instance = Todo.objects.create(req_id=pk)
-    foo_instance.save()
+    # foo_instance = Todo.objects.create(req_id=pk)
+    # foo_instance.save()
 
     return redirect('/ongoing_request')
 

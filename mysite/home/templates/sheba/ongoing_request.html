@@ -3,12 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>$Title$</title>
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <style>
+        .trash {
+            color: rgb(209, 91, 71);
+        }
+
+        .flag {
+            color: rgb(248, 148, 6);
+        }
+
+        .panel-body {
+            padding: 0px;
+        }
+
+        .panel-footer .pagination {
+            margin: 0;
+        }
+
+        .panel .glyphicon, .list-group-item .glyphicon {
+            margin-right: 5px;
+        }
+
+        .panel-body .radio, .checkbox {
+            display: inline-block;
+            margin: 0px;
+        }
+
+        .panel-body input[type=checkbox]:checked + label {
+            text-decoration: line-through;
+            color: rgb(128, 144, 160);
+        }
+
+        .list-group-item:hover, a.list-group-item:focus {
+            text-decoration: none;
+            background-color: rgb(245, 245, 245);
+        }
+
+        .list-group {
+            margin-bottom: 0px;
+        }
 
         /* Chat containers */
         .container {
@@ -45,7 +86,15 @@
             overflow: scroll;
             margin-top: 20px;
         }
-
+        .ex2 {
+            border: 2px solid #175362;
+            border-radius: 5px;
+            background-color: lightblue;
+            min-height: 100px;
+            max-height: 480px;
+            overflow: scroll;
+            margin-top: 20px;
+        }
         /* Clear floats */
         .container::after {
             content: "";
@@ -145,16 +194,63 @@
 
     </div>
 
-        <div class="col-md-8">
+    <div class="col-md-8 ">
 
+        <div class="container ex2" id="todo">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-list"></span>Todo List
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                               {% for todos in todo_list %}
+                                <li class="list-group-item">
+                                    <form method="post">
+                                    <div class="checkbox">
+                                        <input id="check" type="checkbox" name="check"  value="" {% if todos.status %}checked{% endif %}/>
+                                        <label for="check">
+                                            {{todos.todo_details}}
+                                        </label>
+                                    </div>
+                                    <div class="pull-right action-buttons">
+                                                {%if type == "user"%}
+                                        <a class="trash" href="{% url 'todo_delete' pk=todos.pk %}"><span
+                                                class="glyphicon glyphicon-trash"></span></a>
+                                        {% endif %}
+                                      <a href="{% url 'todo_mark' pk=todos.pk %}" class="flag"><span class="glyphicon glyphicon-flag"></span></a>
 
+                                    </div>
+                                    </form>
+                                </li>
+                                    {% endfor %}
+                            </ul>
+                        </div>
 
+                    </div>
 
         </div>
 
+        {%if type == "user"%}
+                <form action="{% url 'todo_add' pk=request.0.id %}" method="post">
+            {% csrf_token %}
+            <div class="container csize">
+                <div class="form-group">
+                    <label for="usr">Add Todo</label>
+                    <input class="form-control" id="todobox" name="todo_details" type="text">
+                </div>
+            </div>
+        </form>
+        {% endif %}
 
+         <a href="" class="btn btn-info" >Start</a>
+                {%if type == "user"%}
+         <a href="{% url 'request_complete' pk=request.0.id %}" class="btn btn-success" >Complete</a>
+        {% endif %}
 
     </div>
+
+
+</div>
 
 </div>
 

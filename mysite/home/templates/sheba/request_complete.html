@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'/>
+    <link href="{% static 'css/message.css' %}" rel="stylesheet">
+    <link href="{% static 'css/searching_service_provider.css' %}" rel="stylesheet">
+
+</head>
+<body>
+
+
+<div class="container-fluid" id="cnt">
+    <form method="post" action="" id="ref"> {% csrf_token %}
+        <div class="row">
+            <div class="column" id="space">
+
+            </div>
+            <div class="column" id="request_data">
+                <div class="tile">
+                    <div class="wrapper">
+                        <div class="header"><h4>Your Request</h4></div>
+
+                        <div class="dates">
+                            <div class="start">
+                                <strong>STARTS</strong> {{request.start_time}}
+                                <span></span>
+                            </div>
+                            <div class="ends">
+                                <strong>ENDS</strong> {{request.end_time}}
+                            </div>
+                        </div>
+
+                        <div class="stats">
+
+                            <div class="" id="loc">
+                                <strong>LOCATION</strong> {{request.location}}
+                            </div>
+
+                            <div>
+                                <strong>SERVICE TYPE</strong> {{request.service_type}}
+                            </div>
+
+                            <div>
+                                <strong>STATUS</strong> {{request.status}}
+                            </div>
+
+                            <div>
+                                <strong>payment</strong> 1000
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="footer">
+                            <a href="/" class="Cbtn Cbtn-danger">Done</a>
+
+
+                        </div>
+                    </div>
+
+                    <div class="wrapper">
+
+                        <div class="header"><h4>Review Service Provider</h4></div>
+
+                        <div class="dates">
+                            <div class="start">
+                                <strong>NAME</strong> {{sp.first_name}}
+                                <span></span>
+                            </div>
+                            <div class="ends">
+                                <strong>RATING</strong> {{sp.rating}}
+                            </div>
+                        </div>
+
+                        <div class="stats">
+
+                            <div id="loc1">
+                                <strong>REVIEW</strong> <input type="text">
+                            </div>
+
+                            <div>
+                                <strong>RATING (out of 5)</strong> <input type="text">
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="column" id="request_data1">
+                    <div class="tile">
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </form>
+
+</div>
+</body>

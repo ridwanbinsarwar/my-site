@@ -7,7 +7,7 @@ from .models import ServiceProvider, Customer, Req, MessagesUser, Todo
 class NewTodo(forms.ModelForm):
     class Meta:
         model = Todo
-        fields = ['req_id', 'details', 'status']
+        fields = ['req_id', 'todo_details', 'status']
 
 
 class NewMessage(forms.ModelForm):
