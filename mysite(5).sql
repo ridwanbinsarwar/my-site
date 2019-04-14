@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2019 at 10:24 AM
+-- Generation Time: Apr 14, 2019 at 06:25 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -180,7 +180,10 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (101, 'Can add messages user', 27, 'add_messagesuser'),
 (102, 'Can change messages user', 27, 'change_messagesuser'),
 (103, 'Can delete messages user', 27, 'delete_messagesuser'),
-(104, 'Can view messages user', 27, 'view_messagesuser');
+(104, 'Can view messages user', 27, 'view_messagesuser'),
+(105, 'Can add checking', 28, 'add_checking'),
+(106, 'Can change checking', 28, 'change_checking'),
+(107, 'Can delete checking', 28, 'delete_checking');
 
 -- --------------------------------------------------------
 
@@ -238,32 +241,6 @@ CREATE TABLE `auth_user_user_permissions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chat_message`
---
-
-CREATE TABLE `chat_message` (
-  `id` int(11) NOT NULL,
-  `message` varchar(1200) NOT NULL,
-  `timestamp` datetime(6) NOT NULL,
-  `is_read` tinyint(1) NOT NULL,
-  `receiver_id` int(11) NOT NULL,
-  `sender_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `chat_userprofile`
---
-
-CREATE TABLE `chat_userprofile` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `customer`
 --
 
@@ -297,9 +274,12 @@ INSERT INTO `customer` (`ID`, `first_name`, `last_name`, `birth_day`, `image`, `
 ('new', '', '', '0000-00-00', '', '', '', '', 0, 0, NULL, NULL, '123'),
 ('newu', '', '', NULL, 'default.jpg', '', '', '', 0, 0, NULL, NULL, '123'),
 ('ridwan12', '', '', '0000-00-00', '', '', '', '', 0, 0, NULL, NULL, '123'),
-('user', 'Ridwan123', 'Bin Sarwar', '0000-00-00', 'default.jpg', '015', 'rdwn@outlook.com', 'Dhaka', 10, 4.11, NULL, NULL, '123'),
+('user', 'Ridwan123', 'Bin Sarwar', NULL, 'profile_pics/12312_DldeJha.jpg', '015', 'rdwn@outlook.com', 'Dhaka', 10, 4.110000000000014, NULL, NULL, '123'),
+('user1', '', '', NULL, 'default.jpg', '', '', '', 23.758642, 90.390171, NULL, NULL, '123'),
+('user12', '', '', NULL, 'default.jpg', '', '', '', 23.758642, 90.390171, NULL, NULL, '123'),
 ('user420', '', '', '0000-00-00', '', '', NULL, '', 0, 0, NULL, NULL, '123'),
-('userasdas', '', '', '0000-00-00', '', '', '', '', 0, 0, NULL, NULL, '1234');
+('userasdas', '', '', '0000-00-00', '', '', '', '', 0, 0, NULL, NULL, '1234'),
+('useru', '', '', NULL, 'default.jpg', '', '', '', 23.758642, 90.390171, NULL, NULL, '123');
 
 -- --------------------------------------------------------
 
@@ -395,6 +375,7 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (5, 'contenttypes', 'contenttype'),
 (7, 'home', 'admin'),
 (22, 'home', 'chat'),
+(28, 'home', 'checking'),
 (18, 'home', 'check_field'),
 (8, 'home', 'customer'),
 (11, 'home', 'location'),
@@ -447,7 +428,6 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (13, 'auth', '0009_alter_user_last_name_max_length', '2019-02-17 18:51:44.161707'),
 (14, 'sessions', '0001_initial', '2019-02-17 18:51:44.466273'),
 (15, 'home', '0001_initial', '2019-04-01 07:45:29.021967'),
-(16, 'pinax_messages', '0001_initial', '2019-04-11 05:18:48.891003'),
 (17, 'home', '0002_check_field', '2019-04-11 06:15:21.935858'),
 (18, 'home', '0003_auto_20190411_1218', '2019-04-11 06:18:12.819158'),
 (19, 'admin', '0003_logentry_add_action_flag_choices', '2019-04-11 09:50:17.544120'),
@@ -461,7 +441,9 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (27, 'home', '0002_chat_users_chat', '2019-04-12 08:51:29.253503'),
 (28, 'chat', '0001_initial', '2019-04-12 09:30:59.636008'),
 (29, 'chat', '0002_userprofile', '2019-04-12 10:02:51.736975'),
-(30, 'home', '0002_auto_20190412_1719', '2019-04-12 11:20:01.281491');
+(30, 'home', '0002_auto_20190412_1719', '2019-04-12 11:20:01.281491'),
+(31, 'home', '0002_checking', '2019-04-14 06:18:20.664212'),
+(32, 'pinax_messages', '0001_initial', '2019-04-14 06:27:27.043425');
 
 -- --------------------------------------------------------
 
@@ -482,13 +464,15 @@ CREATE TABLE `django_session` (
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 ('2qknb8d9v8mdxaz9f7uwysjsjr7x3r1d', 'MGMzMzMxNDQ4ZDZkYjI4YWE0OWE5M2U1MTI1M2JjMTc3MmU0MmFkMjp7ImtleSI6MzEsInR5cGUiOiJzZXJ2aWNlX3Byb3ZpZGVyIiwidXNlciI6IjEyMyJ9', '2019-04-27 01:11:16.340367'),
 ('70w3i6v17grbjlmpxja72ouvj5hr15e4', 'OTdmZWE4NzYwZGVjODRlZjI4YjBkZTkyNmUzZTk1MDMwZWM2M2NiODp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxODY1Y2RhMWNjNDc0ODljYjQwZmVhZjMyNTQxM2JjZTllMzU3ODExIn0=', '2019-03-04 09:01:57.213167'),
-('9os0jse6kooqw25z9yrve18jnxoqjkvv', 'OWY1ZWVmNmIzNTIyNTIzZDFkM2M3MDVhZGJjNmZlYmQ4YWI2N2Q4Mjp7InR5cGUiOiJ1c2VyIiwidXNlciI6InVzZXIifQ==', '2019-04-26 14:01:29.942623'),
+('9os0jse6kooqw25z9yrve18jnxoqjkvv', 'ZGVhZWZhZmRjYTVkYWNkYWU5ODYyNGQwNjAxNTk2ZDkxMzgxMjFmOTp7ImtleSI6MSwidHlwZSI6InNlcnZpY2VfcHJvdmlkZXIiLCJ1c2VyIjoiMTIzIn0=', '2019-04-28 10:53:20.072635'),
+('a7v1ojh440ei63kjiiyrq1tuvduckofr', 'MDMxN2NmN2E4MmUzMTNiOTQwZmRjNWE4NTZjZDU4ZWU4NmVmNWJhMzp7ImtleSI6OSwidHlwZSI6InVzZXIiLCJ1c2VyIjoidXNlciJ9', '2019-04-28 16:01:07.783688'),
 ('bmmpyh6rlybdvqc8xxksk1mu5vxj9aoi', 'MTczNzY0ODVhZmU4MzYzZjg3NTdkMTEzMTBhM2NlZmM2NDU2ZWQ5MTp7Il9hdXRoX3VzZXJfaWQiOiIzIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI4NDRhNDcyMzUyZGJkMGE4NjE1MmYyZTU4YjQyMmFkODJkMjU3YjE1IiwidHlwZSI6InNlcnZpY2VfcHJvdmlkZXIiLCJ1c2VyIjoiMTIzIn0=', '2019-04-26 06:37:10.857023'),
 ('czsc7f0qncymbdyd8mxs6w9saxf0gqw3', 'OWE0MDgxZTU1NTM2MzQxNjM4MmJkMmU0MDk1NzA3ODAxZGU1N2M2Yjp7Il9hdXRoX3VzZXJfaWQiOiIzIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI4NDRhNDcyMzUyZGJkMGE4NjE1MmYyZTU4YjQyMmFkODJkMjU3YjE1In0=', '2019-04-26 08:32:38.597001'),
 ('ig49du8qrra59ks2x5su7v2j9r8ix6o5', 'NWM4ZGI5ZTE1MzY1YWMzMjNhZmIxMDc2OTc5N2NjZTMwNGEyZGNkMDp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI2YzU0YmExNzM0NzJkZTlhZjg2ZjgwMzI4YWJmODkwMjJmZGUxOGYxIn0=', '2019-04-15 07:44:24.239892'),
 ('pwuay2qnsaimlyeduu2om12mr8js31bn', 'NmViNjc4NWQ3NzBmYmRkODg5ZTU1NDE2OWNmODMyMzQ2OTVjNDk5Mjp7InR5cGUiOiJzZXJ2aWNlX3Byb3ZpZGVyIiwidXNlciI6IjEyMyIsImtleSI6M30=', '2019-04-27 07:52:23.204158'),
 ('shrors0ii3rw6lnamdigs0aruu93kq7x', 'OTdmZWE4NzYwZGVjODRlZjI4YjBkZTkyNmUzZTk1MDMwZWM2M2NiODp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxODY1Y2RhMWNjNDc0ODljYjQwZmVhZjMyNTQxM2JjZTllMzU3ODExIn0=', '2019-03-27 09:22:39.751507'),
-('ucqodfjikp224h124sxul7enz2rtm9jw', 'OWExM2U5NmE4ZmQ3ZTM1OGEzMTZlNjM2NjU1MmQ0NTMwZmI2ZWRkNjp7ImtleSI6MSwidHlwZSI6InVzZXIiLCJ1c2VyIjoiYWRmIn0=', '2019-04-27 07:29:47.162903');
+('ucqodfjikp224h124sxul7enz2rtm9jw', 'OWExM2U5NmE4ZmQ3ZTM1OGEzMTZlNjM2NjU1MmQ0NTMwZmI2ZWRkNjp7ImtleSI6MSwidHlwZSI6InVzZXIiLCJ1c2VyIjoiYWRmIn0=', '2019-04-27 07:29:47.162903'),
+('z8989sq0ty3jzrol8qn63dpne419ubs6', 'Nzg0YTQyNzU1MzU4ZDZlMjNiZWJjMGI1MmU4MDljNDUyYWQzZGU2Zjp7ImtleSI6MTgsInR5cGUiOiJzZXJ2aWNlX3Byb3ZpZGVyIiwidXNlciI6IjEyMyJ9', '2019-04-28 16:15:19.456242');
 
 -- --------------------------------------------------------
 
@@ -502,6 +486,17 @@ CREATE TABLE `home_chat` (
   `receiver` varchar(256) NOT NULL,
   `msg` longtext NOT NULL,
   `time` datetime(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `home_checking`
+--
+
+CREATE TABLE `home_checking` (
+  `id` int(11) NOT NULL,
+  `haha` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -534,69 +529,41 @@ CREATE TABLE `home_messagesuser` (
 --
 
 INSERT INTO `home_messagesuser` (`id`, `sender`, `reciever`, `details`, `time`) VALUES
-(1, 'user', '123', NULL, '2019-04-12 15:16:11.917852'),
-(2, 'user', '123', NULL, '2019-04-12 15:16:14.923375'),
-(3, 'user', '123', NULL, '2019-04-12 15:16:15.936103'),
-(4, 'user', '123', NULL, '2019-04-12 15:16:16.888610'),
-(5, 'user', '123', 'h', '2019-04-12 15:16:21.883879'),
-(6, 'user', '123', 'a', '2019-04-12 15:16:26.339481'),
-(7, 'user', '123', 'a', '2019-04-12 15:16:27.298478'),
-(8, 'user', '123', 'a', '2019-04-12 15:16:27.706618'),
-(9, 'user', '123', 'lol', '2019-04-12 15:16:31.460049'),
-(10, '123', 'user', 'ok', '2019-04-12 15:17:26.691145'),
-(11, '123', 'user', 'ljhjkl', '2019-04-12 15:26:53.201775'),
-(12, '123', 'user', ',,,,', '2019-04-12 15:27:15.991897'),
-(13, '123', 'user', 'k', '2019-04-12 15:27:58.449537'),
-(14, '123', 'user', 'naa', '2019-04-12 15:28:02.865886'),
-(15, 'user', '123', 'naa', '2019-04-12 15:29:14.419236'),
-(16, 'user', '123', 'ok', '2019-04-12 16:06:15.104848'),
-(17, 'user', '123', '1', '2019-04-13 06:45:46.770619'),
-(18, 'user', '123', '1', '2019-04-13 06:45:50.704325'),
-(19, 'user', '123', 'abcd', '2019-04-13 06:45:55.750129'),
-(20, 'adf', '123', 'hi', '2019-04-13 07:48:35.242586'),
-(21, 'adf', '123', 'hi', '2019-04-13 07:48:38.106597'),
-(22, '123', 'adf', 'hello', '2019-04-13 07:48:51.331911'),
-(23, 'adf', '123', 'asd', '2019-04-13 07:49:03.749517'),
-(24, '123', 'adf', 'a', '2019-04-13 07:49:18.836637'),
-(25, '123', 'adf', 'asd', '2019-04-13 07:49:21.445537'),
-(26, '123', 'adf', 'asd', '2019-04-13 07:49:23.962595'),
-(27, '123', 'adf', 'asd', '2019-04-13 07:50:50.484398');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `home_pointofinterest`
---
-
-CREATE TABLE `home_pointofinterest` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `position` varchar(42) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `city` varchar(50) NOT NULL,
-  `zipcode` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `home_pointofinterest`
---
-
-INSERT INTO `home_pointofinterest` (`id`, `name`, `position`, `address`, `city`, `zipcode`) VALUES
-(2, 'shop3', '23.759021,90.385046', '312', '123', '123'),
-(3, '121', '23.756281,90.379639', '123', 'asd', '123'),
-(4, 'dadaw', '23.756281,90.379639', 'wad', 'awdw', 'awd');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `home_users_chat`
---
-
-CREATE TABLE `home_users_chat` (
-  `id` int(11) NOT NULL,
-  `user_id` varchar(256) NOT NULL,
-  `last_visit` datetime(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+(1, 'user', '123', 'hi', '2019-04-14 11:05:16.500324'),
+(2, 'user', '123', 'bye', '2019-04-14 11:05:20.092544'),
+(3, 'user', '123', 'a', '2019-04-14 11:05:22.534602'),
+(4, '123', 'user', 'kire bhai', '2019-04-14 11:05:41.128073'),
+(5, '123', 'user', 'kaaj kore toh dekhi', '2019-04-14 11:05:50.052542'),
+(6, 'user', '123', 'lol naa', '2019-04-14 11:05:57.685811'),
+(7, '123', 'user', 'hahah', '2019-04-14 11:07:25.615927'),
+(8, '123', 'user', NULL, '2019-04-14 11:07:39.723593'),
+(9, '123', 'user', NULL, '2019-04-14 11:07:43.060993'),
+(10, '123', 'user', 'hi', '2019-04-14 11:08:00.727228'),
+(11, '123', 'user', 'ok', '2019-04-14 11:09:48.128725'),
+(12, '123', 'user', 'ebnar', '2019-04-14 11:10:01.814099'),
+(13, 'user', '123', 'ji', '2019-04-14 11:10:31.428573'),
+(14, '123', 'user', 'naa', '2019-04-14 11:11:09.232308'),
+(15, 'user', '123', 'ji', '2019-04-14 11:11:35.004321'),
+(16, 'user', '123', 'ajib', '2019-04-14 11:16:09.644838'),
+(17, '123', 'user', 'hahah', '2019-04-14 11:16:30.143103'),
+(18, 'user', '123', 'ajib', '2019-04-14 11:17:24.476514'),
+(19, '123', 'user', 'hahah', '2019-04-14 11:17:34.417724'),
+(20, '123', 'user', 'naa', '2019-04-14 11:17:38.217402'),
+(21, '123', 'user', 'naa', '2019-04-14 11:17:41.206484'),
+(22, '123', 'user', 'naa', '2019-04-14 11:18:51.346728'),
+(23, '123', 'user', 'oo', '2019-04-14 11:19:01.022997'),
+(24, '123', 'user', 'nnna', '2019-04-14 11:19:11.583848'),
+(25, '123', 'user', 'hahaha', '2019-04-14 11:19:15.657207'),
+(26, '123', 'user', 'abar ashilam firey tomar kajhe', '2019-04-14 11:22:54.189484'),
+(27, 'user', '123', 'haha bocj', '2019-04-14 11:23:08.164504'),
+(28, 'user', '123', 'e hotey pare naa', '2019-04-14 11:23:15.255537'),
+(29, 'user', '123', 'yo', '2019-04-14 11:57:02.793169'),
+(30, '123', 'user1', 'hi', '2019-04-14 14:48:56.758933'),
+(31, 'user1', '123', 'ok', '2019-04-14 14:51:26.951412'),
+(32, 'user1', '123', '...', '2019-04-14 14:51:53.661495'),
+(33, '123', 'user1', 'hh', '2019-04-14 14:51:58.793965'),
+(34, '123', 'user', 'asdas', '2019-04-14 16:12:33.779490'),
+(35, 'user', '123', 'naa', '2019-04-14 16:12:39.182038');
 
 -- --------------------------------------------------------
 
@@ -617,14 +584,14 @@ CREATE TABLE `location` (
 
 CREATE TABLE `req` (
   `location` varchar(150) DEFAULT NULL,
-  `lat` double NOT NULL,
-  `lon` double NOT NULL,
-  `radius` int(11) NOT NULL,
-  `service_type` int(2) DEFAULT NULL,
-  `customer` varchar(30) NOT NULL,
-  `status` varchar(10) NOT NULL,
-  `start_time` varchar(20) NOT NULL,
-  `end_time` varchar(20) NOT NULL,
+  `lat` double DEFAULT NULL,
+  `lon` double DEFAULT NULL,
+  `radius` int(11) DEFAULT NULL,
+  `service_type` int(11) DEFAULT NULL,
+  `customer` varchar(30) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  `start_time` varchar(20) DEFAULT NULL,
+  `end_time` varchar(20) DEFAULT NULL,
   `id` int(11) NOT NULL,
   `sp_id` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -634,9 +601,7 @@ CREATE TABLE `req` (
 --
 
 INSERT INTO `req` (`location`, `lat`, `lon`, `radius`, `service_type`, `customer`, `status`, `start_time`, `end_time`, `id`, `sp_id`) VALUES
-('Bir Uttam Ziaur Rahman Road, Near Mohakhali DOHS, Dhaka 1205, Bangladesh', 23.7766, 90.39444800000001, 300, 1, 'user', 'requested', '2019-04-13', '06:48', 1, '123'),
-('Eastern Rd, Dhaka 1205, Bangladesh', 23.779820336183494, 90.39770956616212, 300, 1, 'adf', 'requested', '2019-04-03', '01:21', 2, '123'),
-('Bir Uttam Ziaur Rahman Road, Near Mohakhali DOHS, Dhaka 1205, Bangladesh', 23.7766, 90.39444800000001, 300, 2, 'adf', 'requested', '2019-04-01', '14:34', 3, '123');
+('Bir Uttam Ziaur Rahman Road, Near Mohakhali DOHS, Dhaka 1205, Bangladesh', 23.7766, 90.39444800000001, 300, 1, 'user', 'confirmed', '2019-04-10', '00:31', 18, '123');
 
 -- --------------------------------------------------------
 
@@ -660,27 +625,60 @@ CREATE TABLE `service_provider` (
   `password` varchar(30) DEFAULT NULL,
   `lat` double NOT NULL,
   `lon` double NOT NULL,
-  `radius` int(11) DEFAULT NULL
+  `radius` int(11) DEFAULT NULL,
+  `status` varchar(20) DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `service_provider`
 --
 
-INSERT INTO `service_provider` (`ID`, `first_name`, `last_name`, `birth_day`, `image`, `email`, `city`, `contact_no`, `NID`, `service_type`, `rating`, `verified`, `password`, `lat`, `lon`, `radius`) VALUES
-('1231', '', '', '0000-00-00', '', '', '', NULL, NULL, NULL, NULL, NULL, '1231', 0, 0, NULL),
-('user1', '', '', '0000-00-00', '', '', '', NULL, NULL, NULL, NULL, NULL, '1234', 0, 0, NULL),
-('user1234', '', '', '0000-00-00', '', '', '', NULL, NULL, NULL, NULL, NULL, '1234', 0, 0, NULL),
-('user4321', '', '', '0000-00-00', '', '', '', NULL, NULL, NULL, NULL, NULL, '123', 0, 0, NULL),
-('123', 'abcdfredfgdgdfgd', 'Bin Sarwar', '2019-05-13', 'profile_pics/37376105_1740667919382637_1874814621261496320_n.jpg', 'rdwn@outlook.com', '2019-04-13', '01532601363', 11112312, '7', 1, NULL, '123', 23.77801381594981, 90.39783831219484, 300),
-('image1', 'image1', 'image1', '0000-00-00', 'profile_pics/49896751_2503031203103181_3124222437323964416_n.jpg', 'image1@g.com', 'asd', '123', 213, '1', 1, 1, '123', 0, 0, NULL),
-('imagecheck', 'Ridwan', 'imagecheck', '0000-00-00', 'profile_pics/12312_VrfMuB3.jpg', 'a@n.com', 'imagecheck', '1231', NULL, '', NULL, NULL, 'imagecheck', 0, 0, NULL),
-('123123', '', '', '0000-00-00', 'default.jpg', '', '', '', NULL, '', NULL, NULL, '123', 0, 0, NULL),
-('asasdas', '', '', '0000-00-00', 'default.jpg', '', '', '', NULL, '', NULL, NULL, 'asd', 0, 0, NULL),
-('ok', '', '', '0000-00-00', 'default.jpg', '', '', '', NULL, '', NULL, NULL, '123', 0, 0, NULL),
-('asd', '', '', NULL, 'default.jpg', '', '', '', NULL, '', NULL, NULL, 'asd', 0, 0, NULL),
-('news', '', '', NULL, 'default.jpg', '', '', '', NULL, '', NULL, NULL, '123', 0, 0, NULL),
-('afg', '', '', NULL, 'default.jpg', '', '', '', NULL, '', NULL, NULL, 'afg', 0, 0, NULL);
+INSERT INTO `service_provider` (`ID`, `first_name`, `last_name`, `birth_day`, `image`, `email`, `city`, `contact_no`, `NID`, `service_type`, `rating`, `verified`, `password`, `lat`, `lon`, `radius`, `status`) VALUES
+('1231', '', '', '0000-00-00', '', '', '', NULL, NULL, NULL, NULL, NULL, '1231', 0, 0, NULL, NULL),
+('user1', '', '', '0000-00-00', '', '', '', NULL, NULL, NULL, NULL, NULL, '1234', 0, 0, NULL, NULL),
+('user1234', '', '', '0000-00-00', '', '', '', NULL, NULL, NULL, NULL, NULL, '1234', 0, 0, NULL, NULL),
+('user4321', '', '', '0000-00-00', '', '', '', NULL, NULL, NULL, NULL, NULL, '123', 0, 0, NULL, NULL),
+('123', 'abcdfredfgdgdfgd', 'Bin Sarwar', '2019-05-13', 'default.jpg', 'rdwn@outlook.com', '2019-04-13', '01532601363', 11112312, '7', 1, NULL, '123', 23.77801381594981, 90.39783831219484, 300, 'confirmed'),
+('image1', 'image1', 'image1', '0000-00-00', 'profile_pics/49896751_2503031203103181_3124222437323964416_n.jpg', 'image1@g.com', 'asd', '123', 213, '1', 1, 1, '123', 0, 0, NULL, NULL),
+('imagecheck', 'Ridwan', 'imagecheck', '0000-00-00', 'profile_pics/12312_VrfMuB3.jpg', 'a@n.com', 'imagecheck', '1231', NULL, '', NULL, NULL, 'imagecheck', 0, 0, NULL, NULL),
+('123123', '', '', '0000-00-00', 'default.jpg', '', '', '', NULL, '', NULL, NULL, '123', 0, 0, NULL, NULL),
+('asasdas', '', '', '0000-00-00', 'default.jpg', '', '', '', NULL, '', NULL, NULL, 'asd', 0, 0, NULL, NULL),
+('ok', '', '', '0000-00-00', 'default.jpg', '', '', '', NULL, '', NULL, NULL, '123', 0, 0, NULL, NULL),
+('asd', '', '', NULL, 'default.jpg', '', '', '', NULL, '', NULL, NULL, 'asd', 0, 0, NULL, NULL),
+('news', '', '', NULL, 'default.jpg', '', '', '', NULL, '', NULL, NULL, '123', 0, 0, NULL, NULL),
+('afg', '', '', NULL, 'default.jpg', '', '', '', NULL, '', NULL, NULL, 'afg', 0, 0, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `todo`
+--
+
+CREATE TABLE `todo` (
+  `req_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `details` varchar(200) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `todo`
+--
+
+INSERT INTO `todo` (`req_id`, `id`, `details`, `status`) VALUES
+(4, 3, NULL, NULL),
+(5, 4, NULL, NULL),
+(6, 5, NULL, NULL),
+(7, 6, NULL, NULL),
+(9, 7, NULL, NULL),
+(11, 8, NULL, NULL),
+(13, 9, NULL, NULL),
+(14, 10, NULL, NULL),
+(15, 11, NULL, NULL),
+(16, 12, NULL, NULL),
+(17, 13, NULL, NULL),
+(17, 14, NULL, NULL),
+(18, 15, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -758,21 +756,6 @@ ALTER TABLE `auth_user_user_permissions`
   ADD KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`);
 
 --
--- Indexes for table `chat_message`
---
-ALTER TABLE `chat_message`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `chat_message_receiver_id_0eceddde_fk_auth_user_id` (`receiver_id`),
-  ADD KEY `chat_message_sender_id_991c686c_fk_auth_user_id` (`sender_id`);
-
---
--- Indexes for table `chat_userprofile`
---
-ALTER TABLE `chat_userprofile`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_id` (`user_id`);
-
---
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
@@ -813,6 +796,12 @@ ALTER TABLE `home_chat`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `home_checking`
+--
+ALTER TABLE `home_checking`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `home_check_field`
 --
 ALTER TABLE `home_check_field`
@@ -822,18 +811,6 @@ ALTER TABLE `home_check_field`
 -- Indexes for table `home_messagesuser`
 --
 ALTER TABLE `home_messagesuser`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `home_pointofinterest`
---
-ALTER TABLE `home_pointofinterest`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `home_users_chat`
---
-ALTER TABLE `home_users_chat`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -847,13 +824,20 @@ ALTER TABLE `location`
 --
 ALTER TABLE `req`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `sp_id` (`sp_id`);
+  ADD KEY `FK` (`sp_id`);
 
 --
 -- Indexes for table `service_provider`
 --
 ALTER TABLE `service_provider`
   ADD UNIQUE KEY `ID` (`ID`);
+
+--
+-- Indexes for table `todo`
+--
+ALTER TABLE `todo`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `PK,AK` (`id`);
 
 --
 -- Indexes for table `users`
@@ -881,7 +865,7 @@ ALTER TABLE `auth_group_permissions`
 -- AUTO_INCREMENT for table `auth_permission`
 --
 ALTER TABLE `auth_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT for table `auth_user`
@@ -902,18 +886,6 @@ ALTER TABLE `auth_user_user_permissions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `chat_message`
---
-ALTER TABLE `chat_message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `chat_userprofile`
---
-ALTER TABLE `chat_userprofile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
@@ -923,18 +895,24 @@ ALTER TABLE `django_admin_log`
 -- AUTO_INCREMENT for table `django_content_type`
 --
 ALTER TABLE `django_content_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `home_chat`
 --
 ALTER TABLE `home_chat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `home_checking`
+--
+ALTER TABLE `home_checking`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -947,25 +925,19 @@ ALTER TABLE `home_check_field`
 -- AUTO_INCREMENT for table `home_messagesuser`
 --
 ALTER TABLE `home_messagesuser`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
-
---
--- AUTO_INCREMENT for table `home_pointofinterest`
---
-ALTER TABLE `home_pointofinterest`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `home_users_chat`
---
-ALTER TABLE `home_users_chat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `req`
 --
 ALTER TABLE `req`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `todo`
+--
+ALTER TABLE `todo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
@@ -999,30 +971,11 @@ ALTER TABLE `auth_user_user_permissions`
   ADD CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
 
 --
--- Constraints for table `chat_message`
---
-ALTER TABLE `chat_message`
-  ADD CONSTRAINT `chat_message_receiver_id_0eceddde_fk_auth_user_id` FOREIGN KEY (`receiver_id`) REFERENCES `auth_user` (`id`),
-  ADD CONSTRAINT `chat_message_sender_id_991c686c_fk_auth_user_id` FOREIGN KEY (`sender_id`) REFERENCES `auth_user` (`id`);
-
---
--- Constraints for table `chat_userprofile`
---
-ALTER TABLE `chat_userprofile`
-  ADD CONSTRAINT `chat_userprofile_user_id_0827f965_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
-
---
 -- Constraints for table `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
   ADD CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   ADD CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`);
-
---
--- Constraints for table `req`
---
-ALTER TABLE `req`
-  ADD CONSTRAINT `req_ibfk_1` FOREIGN KEY (`sp_id`) REFERENCES `service_provider` (`ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
