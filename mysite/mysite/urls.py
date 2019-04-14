@@ -14,9 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
+from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from home import views as home_views
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,12 +29,15 @@ urlpatterns = [
     path('profile/', home_views.profile),
     path('logout/', home_views.logout),
     path('request/', home_views.request),
-    path('available_request/', home_views.available_request),
+    path('available_request/', home_views.available_request, name='available_request'),
     path('history/', home_views.history),
     path('post/<int:pk>/', home_views.sp_request, name='sp_request'),
-    path('request_searching/', home_views.request_searching),
+    path('post1/<int:pk>/', home_views.request_details, name='request_details'),
+                  # path('request_searching/', home_views.request_searching),
     path('searching_service_provider/', home_views.searching_service_provider),
+    path('ongoing_request/', home_views.ongoing_request),
     path('del/<int:pk>/', home_views.delete_request, name="delete_request"),
-    path('refresh_check/', home_views.refresh_check),
+    path('del1/<int:pk>/', home_views.decline_request, name="decline_request"),
+   path('refresh_check/', home_views.refresh_check),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

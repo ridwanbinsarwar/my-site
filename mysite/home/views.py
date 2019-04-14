@@ -1,17 +1,70 @@
-from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect,get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 
 # Create your views here.
-from .forms import NewServiceProvider, NewUser, ServiceProviderProfile, CustomerProfile, requestForm,Req, NewMessage
+from .forms import NewServiceProvider, NewUser, ServiceProviderProfile, CustomerProfile,\
+    requestForm,Req, NewMessage, Todo, NewTodo
 import datetime
 from .models import ServiceProvider, Customer
 
+
+def ongoing_request(request):
+    message_form = NewMessage()
+
+    if request.session['type'] == "user":
+        requested = User.objects.raw('SELECT * FROM req WHERE status LIKE ("confirmed") and customer=%s LIMIT 1',
+                                     [request.session['user']])
+    else:
+        requested = User.objects.raw('SELECT * FROM req WHERE status LIKE ("confirmed") and sp_id=%s LIMIT 1',
+                                     [request.session['user']])
+        obj = ServiceProvider.objects.get(id=request.session['user'])
+        if obj.status == "pending":
+            return redirect('/available_request')
+    try:
+        req_id = requested[0].id
+        interested_sp = requested[0].sp_id
+        user = requested[0].customer
+        user_message = User.objects.raw(
+            'SELECT * FROM home_messagesuser WHERE (sender LIKE (%s) and reciever LIKE (%s)) or (reciever LIKE (%s) and sender LIKE (%s)) ORDER BY time ASC LIMIT 50',
+                [user, interested_sp, user, interested_sp])
+
+        todo_list = User.objects.raw(
+            'SELECT * FROM todo WHERE req_id = %s', [req_id])
+
+        if request.method == "GET":
+            # print(request.session['type'])
+            return render(request, 'sheba/ongoing_request.html',
+                          {'request': requested, 'user_messages': user_message, 'form': message_form, 'user': request.session['user'], 'type': request.session['type']})
+        else:
+            mutable = request.POST._mutable
+            print(request.POST)
+            request.POST._mutable = True
+            request.POST['sender'] = request.session['user']
+            if request.session['type'] == "user":
+                request.POST['reciever'] = interested_sp
+            else:
+                request.POST['reciever'] = requested[0].customer
+
+            request.POST['time'] = datetime.datetime.now()
+            request.POST._mutable = mutable
+            form = NewMessage(request.POST)
+            if request.method == "POST":
+                if form.is_valid():
+                    form.save()
+                    return redirect('/ongoing_request')
+
+    except IndexError:
+        return render(request, 'sheba/request.html', {'found': "ok"})
+
+    return render(request, 'sheba/ongoing_request.html',
+                  {'request': requested, 'user_messages': user_message, 'form': message_form, 'user': request.session['user'],'type': request.session['type']})
+
+
 def refresh_check(request):
     print("_______==========__________")
+
 
 def delete_request(request, pk):
     try:
@@ -23,16 +76,28 @@ def delete_request(request, pk):
     return redirect('/request/')
 
 
+def decline_request(request, pk):
+    to_update = Req.objects.get(id=pk)  # object to update
+    to_update.status = "pending"
+    sp = ServiceProvider.objects.get(id=to_update.sp_id)
+    sp.status = "pending"
+    to_update.sp_id = ""
+    to_update.save()
+    sp.save()
+    return redirect('/searching_service_provider')
+
+
 def searching_service_provider(request):
     requested = User.objects.raw(
-        'SELECT *,count(*) as cnt FROM req WHERE status LIKE ("pending") or status LIKE ("requested") and customer=%s LIMIT 1'
+        'SELECT *,count(*) as cnt FROM req WHERE status LIKE ("pending") or status LIKE ("confirmed") and customer=%s LIMIT 1'
         , [request.session['user']]
     )  # checking request status "pending" or "requested"
     if requested[0].cnt == 0:
         print(requested[0].cnt)
         return redirect('/request/')
+
     interested = User.objects.raw(
-        'SELECT * FROM req WHERE status LIKE ("requested") and customer=%s LIMIT 1', [request.session['user']]
+        'SELECT * FROM req WHERE status LIKE ("confirmed") and customer=%s LIMIT 1', [request.session['user']]
     )
 
     try:
@@ -46,43 +111,6 @@ def searching_service_provider(request):
         return render(request, 'sheba/searching_service_provider.html', {'request': requested, 'found': "notfound"})
 
 
-def request_searching(request):
-    message_form = NewMessage()
-    customer = "customer"
-    requested = User.objects.raw(
-        'SELECT * FROM req WHERE status LIKE ("requested") and customer=%s LIMIT 1', [request.session['user']]
-    )
-    try:
-        interested_sp = requested[0].sp_id
-        user_message = User.objects.raw(
-            'SELECT * FROM home_messagesuser WHERE sender LIKE (%s) and reciever LIKE (%s) ORDER BY time DESC LIMIT 5',
-                [request.session['user'], interested_sp])
-        sp_message = User.objects.raw(
-            'SELECT * FROM home_messagesuser WHERE reciever LIKE (%s) and sender LIKE (%s) ORDER BY time ASC LIMIT 5',
-                [request.session['user'], interested_sp])
-
-        if request.method == "GET":
-            return render(request, 'sheba/request_searching.html',
-                      {'request': requested, 'user_messages': user_message, 'sp_messages': sp_message, 'form': message_form})
-        else:
-            mutable = request.POST._mutable
-            print(request.POST)
-            request.POST._mutable = True
-            request.POST['sender'] = request.session['user']
-            request.POST['reciever'] = interested_sp
-            request.POST['time'] = datetime.datetime.now()
-            request.POST._mutable = mutable
-            form = NewMessage(request.POST)
-            if request.method == "POST":
-                if form.is_valid():
-                    form.save()
-                    return redirect('/request_searching/')
-    except IndexError:
-        return render(request, 'sheba/request_searching.html', {'found': "ok"})
-
-    return render(request, 'sheba/request_searching.html',
-                  {'request': requested, 'user_messages': user_message, 'sp_messages': sp_message,'form': message_form})
-
 
 def home(request):
     try:
@@ -95,46 +123,40 @@ def sp_request(request, pk):
     to_update = Req.objects.get(id=pk)  # object to update
     request.session['key'] = pk
     print(pk)
-    to_update.status = "requested"
+    to_update.status = "confirmed"
     to_update.sp = ServiceProvider.objects.get(id=request.session['user'])  # creating foreign key
     user = to_update.customer
     to_update.save()  # save object
 
-    message_form = NewMessage()
+    sp = ServiceProvider.objects.get(id=request.session['user'])
+    sp.status = "confirmed"
+    sp.save()
 
-    user_message = User.objects.raw(
-        'SELECT * FROM home_messagesuser WHERE sender LIKE (%s) and reciever LIKE (%s) ORDER BY time DESC LIMIT 5',
-            [request.session['user'], user])
-    sp_message = User.objects.raw(
-        'SELECT * FROM home_messagesuser WHERE reciever LIKE (%s) and sender LIKE (%s) ORDER BY time ASC LIMIT 5',
-            [request.session['user'], user])
+    foo_instance = Todo.objects.create(req_id=pk)
+    foo_instance.save()
 
-    if request.method == "GET":
-        return render(request, 'sheba/available_request.html',
-                  {'request': to_update, 'user_messages': user_message, 'sp_messages': sp_message, 'form': message_form})
-    else:
-        mutable = request.POST._mutable
-        print(request.POST)
-        request.POST._mutable = True
-        request.POST['sender'] = request.session['user']
-        request.POST['reciever'] = user
-        request.POST['time'] = datetime.datetime.now()
-        request.POST._mutable = mutable
-        form = NewMessage(request.POST)
-        if request.method == "POST":
-            if form.is_valid():
-                form.save()
-                return render(request, 'sheba/available_request.html',
-                              {'request': to_update, 'user_messages': user_message, 'sp_messages': sp_message,
-                               'form': message_form})
-    return render(request, 'sheba/available_request.html',
-                  {'request': to_update, 'user_messages': user_message, 'sp_messages': sp_message,'form': message_form})
+    return redirect('/ongoing_request')
+
+
+def request_details(request, pk):
+    to_update = Req.objects.get(id=pk)  # object to update
+    user_details = User.objects.raw(
+        'SELECT *, id FROM customer WHERE id LIKE (%s)', [to_update.customer]
+    )
+    for user in user_details:
+        print(user.first_name)
+    return render(request, 'sheba/request_details.html', {'details': to_update, 'user': user_details})
 
 
 def available_request(request):
+
     to_update = ServiceProvider.objects.get(id=request.session['user'])
     lat1 =to_update.lat
     lon1 = to_update.lon
+
+    if to_update.status != "pending":
+        return redirect('/ongoing_request')
+
     all_req = User.objects.raw(
             'SELECT *, (6371 *acos(cos(radians(%s)) * cos(radians(lat)) * cos(radians(lon) - radians(%s)) + sin(radians(%s)) * sin(radians(lat )))) AS distance FROM req WHERE status LIKE("Pending") HAVING distance < 1.3  ORDER BY distance LIMIT 0, 20',[lat1, lon1, lat1])
     return render(request, 'sheba/available_request.html', {'all_req': all_req})

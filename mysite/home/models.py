@@ -72,6 +72,7 @@ class ServiceProvider(models.Model):
     lat = models.FloatField(null=False, blank=True, default=23.758642)
     lon = models.FloatField(null=False, blank=True, default=90.390171)
     radius = models.IntegerField()
+    status = models.CharField(max_length=20, blank=True, null=True, default="pending")
 
     class Meta:
         managed = False
@@ -88,6 +89,9 @@ class Location(models.Model):
         managed = False
         db_table = 'location'
 
+
+class checking(models.Model):
+    haha = models.CharField(max_length= 100)
 
 class Req(models.Model):
     location = models.CharField(max_length=150, blank=True, null=True)
@@ -110,3 +114,11 @@ class Req(models.Model):
         return self.id
 
 
+class Todo(models.Model):
+    req_id = models.IntegerField()
+    details = models.CharField(max_length=200, blank=True, null=True)
+    status = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'todo'

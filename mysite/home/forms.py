@@ -1,7 +1,13 @@
 from django import forms
 
 
-from .models import ServiceProvider, Customer, Req, MessagesUser
+from .models import ServiceProvider, Customer, Req, MessagesUser, Todo
+
+
+class NewTodo(forms.ModelForm):
+    class Meta:
+        model = Todo
+        fields = ['req_id', 'details', 'status']
 
 
 class NewMessage(forms.ModelForm):

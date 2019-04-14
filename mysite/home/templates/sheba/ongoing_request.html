@@ -1,0 +1,192 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+    <style>
+
+        /* Chat containers */
+        .container {
+            border: 2px solid #dedede;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        /* Darker chat container */
+        .darker {
+            border-color: #ccc;
+            background-color: #ddd;
+            margin-left: 13px;
+
+        }
+
+        .white {
+            margin-right: 13px;
+
+        }
+
+        .csize {
+            width: 100%;;
+        }
+
+        .ex1 {
+            border: 2px solid #175362;
+            border-radius: 5px;
+            background-color: lightblue;
+            height: 70%;
+            max-height: 680px;
+            overflow: scroll;
+            margin-top: 20px;
+        }
+
+        /* Clear floats */
+        .container::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        /* Style images */
+        .container img {
+            float: left;
+            max-width: 60px;
+            width: 100%;
+            margin-right: 20px;
+            border-radius: 50%;
+        }
+
+        /* Style the right image */
+        .container img.right {
+            float: right;
+            margin-left: 20px;
+            margin-right: 0;
+        }
+
+        /* Style time text */
+        .time-right {
+            float: right;
+            color: #aaa;
+        }
+
+        /* Style time text */
+        .time-left {
+            float: left;
+            color: #999;
+        }
+
+        #msgbox {
+            width: 100%;
+
+        }
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse" id="menu">
+    <ul class="nav navbar-nav">
+        <li><a href="/">HOME</a></li>
+    </ul>
+</nav>
+
+<div class="row">
+    <div class="col-md-4">
+
+
+        <div class="container ex1" id="scrl">
+
+            <form id="msgdetails" method="get">
+                <h1>{{user}}</h1>
+                {% csrf_token %}
+                {% for msg in user_messages %}
+
+                {% if msg.sender != user %}
+                <div class="container white">
+                    <!--<img src="/w3images/bandmember.jpg" alt="Avatar">-->
+                    <p>{{msg.details}}</p>
+                    <span class="time-right">11:00</span>
+                </div>
+                {% endif %}
+
+                {% if msg.sender == user %}
+                <div class="container darker">
+                    <!--<img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">-->
+                    <p>{{msg.details}}</p>
+                    <span class="time-left">11:01</span>
+                </div>
+                {% endif %}
+                <script>
+                    scrollToBottom('scrl');
+                </script>
+                {% endfor %}
+
+            </form>
+            <script>
+                refresh();
+            </script>
+        </div>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="container csize">
+                <div class="form-group">
+                    <label for="usr">Message:</label>
+                    <input class="form-control" id="msgbox" name="details" type="text">
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+        <div class="col-md-8">
+
+
+
+
+        </div>
+
+
+
+    </div>
+
+</div>
+
+<div id="footer">
+    <div class=" text-center">
+        <div class="fnav">
+            <p>Copyright &copy; 2019 CycloCoder. Designed by Sheba</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+    function refresh() {
+        $.ajax({
+            url: "/ongoing_request",
+            success: function (data) {
+                var dtr = $("#msgdetails", data);
+                $('#msgdetails').html(dtr);
+            }
+        });
+        setTimeout("refresh()", 3000);
+    }
+
+    function scrollToBottom(id) {
+        var div = document.getElementById(id);
+        div.scrollTop = div.scrollHeight - div.clientHeight;
+    }
+
+    $(function () {
+        refresh();
+    });
+</script>

@@ -1,0 +1,77 @@
+{% load static %}
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+  <link rel="stylesheet" href="{% static 'css/message.css' %}">
+
+
+
+</head>
+
+<body>
+
+ <nav id = "menu" class="navbar navbar-inverse">
+  <ul class="nav navbar-nav">
+    <li><a href="/">HOME</a></li>
+  </ul>
+</nav>
+
+<form method="post" action="">
+ {% csrf_token %}
+    {% if found == "ok"  %}
+        <div class="loader"></div>
+    {% endif %}
+ <div class="container-fluid">
+     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+         {% for req in request %}
+         <p1>{{req.sp_id}}</p1>
+         {% endfor %}
+     </div>
+     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+         {% for sp in sp_messages %}
+         <div class="container darker">
+             <p>{{sp.details}}</p>
+             <span class="time-right">11:00</span>
+         </div>
+         {% endfor%}
+
+         {% for sp in user_messages %}
+         <div class="container">
+             <p>{{sp.details}}</p>
+             <span class="time-right">11:00</span>
+         </div>
+         {% endfor%}
+
+
+
+
+         <div class="container">
+         <div class="form-group">
+            <label for="usr">Message:</label>
+            <input type="text" name="details" class="form-control" id="usr">
+        </div>
+        </div>
+     </div>
+     <div>
+     </div>
+ </div>
+</form>
+
+
+     <div id="footer">
+  <div class="container text-center">
+    <div class="fnav">
+      <p>Copyright &copy; 2019 CycloCoder. Designed by Sheba</p>
+    </div>
+  </div>
+</div>
+
+
+</body>
+

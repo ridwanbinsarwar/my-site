@@ -1,0 +1,298 @@
+{% load static %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Child & Elder Care Service</title>
+<meta name="description" content="">
+<meta name="author" content="Ridwan & Tahiyat">
+
+
+
+<!-- Bootstrap -->
+<link rel="stylesheet" type="text/css"  href="../static/css/bootstrap.css">
+<link rel="stylesheet" href="{% static 'css/sheba.css' %}">
+<link rel="stylesheet" type="text/css" href="../static/fonts/font-awesome/css/font-awesome.css">
+
+<!-- Stylesheet
+    ================================================== -->
+
+<!-- for collapse navbar -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body id = "home-top" data-spy = "scroll" data-target=".navbar-fixed-top">
+
+    <!-- top nav bar -->
+    <nav id = "menu" class="navbar navbar-default navbar-fixed-top">
+        <div class = "container">
+        <form method="post">
+                          {% csrf_token %}
+            <div class="navbar-header">
+                <!-- collapse when size of screen is small -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-top">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                 </button>
+                <!-- logo -->
+                <a class="navbar-brand page-scroll" href="#home-top"><i class="fa fa-moon-o fa-rotate-90"></i> Sheba</a>
+            </div>
+
+            <!-- /.navbar-collapse -->
+
+            <div class="collapse navbar-collapse" id="navbar-top">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#home-top"><font size="3">Home</font></a></li>
+
+                   {% if user_type == "not_logged" %}
+                        <li><a href="user_login/"><font size="3">Login</font></a></li>
+                   {% endif %}
+
+                   {% if user_type == "user" or user_type == "service_provider" %}
+                        <li><a href="/profile"><font size="3">Profile</font></a></li>
+                   {% endif %}
+
+                   {% if user_type == "user" or user_type == "service_provider" %}
+                        <li><a href="/history"><font size="3">History</font></a> </li>
+                   {% endif %}
+
+                   {% if user_type == "user" or user_type == "service_provider" %}
+                        <li><a href="/logout"><font size="3">Logout</font></a></li>
+                   {% endif %}
+
+                   {% if user_type == "not_logged" %}
+                    <li>
+                        <div class="dropdown">
+                            <button id="drp" class="dropbtn"><a class="navbar-brand  "><font size="3">SIGNUP</font></a></button>
+                            <div class="dropdown-content">
+                                <a href="user_signup/">User</a>
+                                <a href="sp_signup/">Service Provider</a>
+                            </div>
+                        </div>
+                    </li>
+                   {% endif %}
+              </ul>
+            </div>
+        </form>
+        </div>
+    </nav>
+
+    <!--header-->
+ <div id="head" class="text-center">
+    <header id ="header">
+        <div class="intro"> <!-- css -->
+            <div class="overlay"> <!-- css -->
+                <div class="container">
+                    <div class="row">
+                      <div class="intro-text"> <!-- css -->
+                           <form method="post">
+                          {% csrf_token %}
+                          {% if user_type == "user" %}
+                                <h1><span class="brand">Request</span></h1>
+                                <a href="/request" class="btn btn-default">Request Service</a>
+                          {% endif %}
+
+                          {%if user_type == "service_provider" %}
+                                <h1><span class="brand">Available Services</span></h1>
+                                <a href="/available_request" class="btn btn-default">Services</a>
+                          {% endif %}
+
+                          {% if user_type == "not_logged" %}
+                                <h1>Welcome to <span class="brand">SHEBA</span></h1>
+                                <p>We Provide Child & Elder Care Service At Your Home</p>
+                                <a href="#services" class="btn btn-default">Learn More</a>
+                          {% endif %}
+                            </form>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+ </div>
+
+<!-- Services Section -->
+    <div id="services" class="text-center">
+      <div class="container">
+
+        <div class="col-md-8 col-md-offset-2 section-title">
+          <h2>Our Services</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor apibus lornare diam commodo nibh.</p>
+        </div>
+
+          <div class="row">
+              <div class="col-xs-6 col-md-3"> <i class="fa fa-child"></i>
+                <h4>Child Care</h4>
+                <p>Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque natoque etiam.</p>
+              </div>
+
+              <div class="col-xs-6 col-md-3"> <i class="fa fa-male"></i>
+                <h4>Elder Care</h4>
+                <p>Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque.</p>
+              </div>
+
+              <div class="col-xs-6 col-md-3"> <i class="fa fa-rocket"></i>
+                <h4>Lorem ipsum </h4>
+                <p>Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque natoque etiam.</p>
+              </div>
+
+              <div class="col-xs-6 col-md-3"> <i class="fa fa-line-chart"></i>
+                <h4>Lorem ipsum </h4>
+                <p>Lorem ipsum dolor sit amet placerat facilisis felis mi in tempus eleifend pellentesque natoque.</p>
+              </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Testimonials Section -->
+<div id="testimonials" class="text-center">
+  <div class="container">
+    <div class="section-title center">
+      <h2>Testimonials</h2>
+    </div>
+
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="row testimonials">
+          <div class="col-sm-4">
+            <blockquote><i class="fa fa-quote-left"></i>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elitduis sed dapibus leo nec ornare.</p>
+              <div class="clients-name">
+                <p><strong>John Doe</strong><br>
+                  <em>CEO, Company Inc.</em></p>
+              </div>
+            </blockquote>
+          </div>
+          <div class="col-sm-4">
+            <blockquote><i class="fa fa-quote-left"></i>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elitduis sed dapibus leo nec ornare.</p>
+              <div class="clients-name">
+                <p><strong>Jane Doe</strong><br>
+                  <em>CEO, Company Inc.</em></p>
+              </div>
+            </blockquote>
+          </div>
+          <div class="col-sm-4">
+            <blockquote><i class="fa fa-quote-left"></i>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elitduis sed dapibus leo nec ornare.</p>
+              <div class="clients-name">
+                <p><strong>Chris Smith</strong><br>
+                  <em>CEO, Company Inc.</em></p>
+              </div>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Team Section -->
+<div id="team" class="text-center">
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2 section-title">
+      <h2>Meet the Team</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor apibus lornare diam commodo nibh.</p>
+    </div>
+    <div id="row">
+      <div class="col-md-3 col-sm-6 team">
+        <div class="thumbnail"> <img src="../static/img/team/01.jpg" alt="..." class="img-circle team-img">
+          <div class="caption">
+            <h3>John Doe</h3>
+            <p>Founder / CEO</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 team">
+        <div class="thumbnail"> <img src="../static/img/team/02.jpg" alt="..." class="img-circle team-img">
+          <div class="caption">
+            <h3>Mike Doe</h3>
+            <p>Web Designer</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 team">
+        <div class="thumbnail"> <img src="../static/img/team/03.jpg" alt="..." class="img-circle team-img">
+          <div class="caption">
+            <h3>Jane Doe</h3>
+            <p>Creative Director</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 team">
+        <div class="thumbnail"> <img src="../static/img/team/04.jpg" alt="..." class="img-circle team-img">
+          <div class="caption">
+            <h3>Larry Show</h3>
+            <p>Project Manager</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Contact Section -->
+<div id="contact" class="text-center">
+  <div class="overlay">
+    <div class="container">
+      <div class="col-md-8 col-md-offset-2 section-title">
+        <h2>Get In Touch</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor apibus lornare diam commodo nibh.</p>
+      </div>
+      <div class="col-md-8 col-md-offset-2">
+        <form name="sentMessage" id="contactForm" novalidate>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="text" id="name" class="form-control" placeholder="Name" required="required">
+                <p class="help-block text-danger"></p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="email" id="email" class="form-control" placeholder="Email" required="required">
+                <p class="help-block text-danger"></p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <textarea name="message" id="message" class="form-control" rows="4" placeholder="Message" required></textarea>
+            <p class="help-block text-danger"></p>
+          </div>
+          <div id="success"></div>
+          <button type="submit" class="btn btn-default">Send Message</button>
+        </form>
+        <div class="social">
+          <ul>
+            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+            <li><a href="#"><i class="fa fa-github"></i></a></li>
+            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="footer">
+  <div class="container text-center">
+    <div class="fnav">
+      <p>Copyright &copy; 2019 CycloCoder. Designed by Sheba</p>
+    </div>
+  </div>
+</div>
+
+
+  <script src="../static/js/bootstrap.js"></script>
+
+<script type="text/javascript" src="../static/js/main.js"></script>
+</body>
+</html>
